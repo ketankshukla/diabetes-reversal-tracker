@@ -16,6 +16,21 @@ export const metadata: Metadata = {
     shortcut: "/favicon.svg",
     apple: "/favicon.svg",
   },
+  openGraph: {
+    title: "Diabetes Reversal Tracker",
+    description:
+      "Track your journey to health freedom - Zero Carbs, 18:6 Fasting, Metformin Freedom",
+    url: "https://diabetes-reversal-tracker.vercel.app",
+    siteName: "Diabetes Reversal Tracker",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Diabetes Reversal Tracker",
+    description:
+      "Track your journey to health freedom - Zero Carbs, 18:6 Fasting, Metformin Freedom",
+  },
 };
 
 export const viewport: Viewport = {
