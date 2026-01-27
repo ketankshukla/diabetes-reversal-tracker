@@ -3,15 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Scale,
-  Pill,
-  Timer,
-  TestTube,
-  Menu,
-  X,
-} from "lucide-react";
+import { LayoutDashboard, Scale, Pill, TestTube, Menu, X } from "lucide-react";
 import { calculateDaysElapsed } from "@/lib/calculations";
 
 interface SidebarProps {
@@ -22,7 +14,6 @@ const menuItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard, emoji: "📊" },
   { href: "/weight-log", label: "Weight Log", icon: Scale, emoji: "⚖️" },
   { href: "/supplements", label: "Supplements", icon: Pill, emoji: "💊" },
-  { href: "/countdown", label: "Countdown", icon: Timer, emoji: "⏱️" },
   { href: "/lab-tests", label: "Lab Tests", icon: TestTube, emoji: "🩺" },
 ];
 

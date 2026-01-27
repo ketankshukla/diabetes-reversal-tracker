@@ -95,6 +95,24 @@ const DiabetesReversalTracker = ({
       "1. Stand with feet hip-width apart, slight bend in knees.\n2. Hinge forward at the hips, back flat.\n3. Let arms hang down with slight bend in elbows.\n4. Raise arms out to the sides, squeezing shoulder blades.\n5. Lower with control.",
   };
 
+  // Achievements for badges tab
+  const achievements = [
+    { id: 1, name: "Day One Warrior", icon: "🎯", day: 1 },
+    { id: 2, name: "Sugar Free", icon: "🍬", day: 1 },
+    { id: 3, name: "Metformin Master", icon: "💊", day: 7 },
+    { id: 4, name: "Fat Burner", icon: "🔥", day: 3 },
+    { id: 5, name: "5 Pound Club", icon: "⚖️", day: 5 },
+    { id: 6, name: "Two Week Titan", icon: "💪", day: 14 },
+    { id: 7, name: "10 Pound Legend", icon: "🏆", day: 14 },
+    { id: 8, name: "Month One Champion", icon: "👑", day: 30 },
+    { id: 9, name: "Halfway Hero", icon: "🦸", day: 41 },
+    { id: 10, name: "20 Pound Destroyer", icon: "💥", day: 45 },
+    { id: 11, name: "Two Month Warrior", icon: "⚔️", day: 60 },
+    { id: 12, name: "Victory Lap", icon: "🎉", day: 82 },
+  ];
+
+  const unlockedCount = achievements.filter((a) => daysElapsed >= a.day).length;
+
   const toggleExercise = (exerciseName: string) => {
     setExpandedExercises((prev) => {
       const newSet = new Set(prev);
@@ -833,6 +851,11 @@ const DiabetesReversalTracker = ({
         {[
           { id: "dashboard", label: "📊 Dashboard" },
           { id: "exercises", label: "💪 Exercises" },
+          { id: "stats", label: "📈 Stats" },
+          {
+            id: "badges",
+            label: `🏅 Badges (${unlockedCount}/${achievements.length})`,
+          },
           { id: "reports", label: "📋 Reports" },
         ].map((tab) => (
           <button
@@ -2104,6 +2127,380 @@ const DiabetesReversalTracker = ({
             </table>
           </div>
         </>
+      )}
+
+      {/* STATS TAB */}
+      {activeTab === "stats" && (
+        <>
+          <div style={styles.card}>
+            <h3
+              style={{
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.85rem" : "0.9rem",
+                color: "#00d4aa",
+              }}
+            >
+              📈 PROJECTED HEALTH STATS
+            </h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
+                gap: isMobile ? "10px" : "12px",
+              }}
+            >
+              <div
+                style={{
+                  background: "rgba(0,212,170,0.15)",
+                  borderRadius: "12px",
+                  padding: isMobile ? "10px" : "12px",
+                  textAlign: "center",
+                  border: "1px solid rgba(0,212,170,0.3)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#00d4aa",
+                  }}
+                >
+                  {currentWeight} lbs
+                </div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  CURRENT WEIGHT
+                </div>
+              </div>
+              <div
+                style={{
+                  background: "rgba(245,87,108,0.15)",
+                  borderRadius: "12px",
+                  padding: isMobile ? "10px" : "12px",
+                  textAlign: "center",
+                  border: "1px solid rgba(245,87,108,0.3)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#f5576c",
+                  }}
+                >
+                  {totalWeightLost} lbs
+                </div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  TOTAL LOST
+                </div>
+              </div>
+              <div
+                style={{
+                  background: "rgba(79,172,254,0.15)",
+                  borderRadius: "12px",
+                  padding: isMobile ? "10px" : "12px",
+                  textAlign: "center",
+                  border: "1px solid rgba(79,172,254,0.3)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#4facfe",
+                  }}
+                >
+                  {projectedA1C}%
+                </div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  PROJECTED A1C
+                </div>
+              </div>
+              <div
+                style={{
+                  background: "rgba(251,191,36,0.15)",
+                  borderRadius: "12px",
+                  padding: isMobile ? "10px" : "12px",
+                  textAlign: "center",
+                  border: "1px solid rgba(251,191,36,0.3)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#fbbf24",
+                  }}
+                >
+                  {projectedGlucose}
+                </div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  FASTING GLUCOSE
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={styles.card}>
+            <h3
+              style={{
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.85rem" : "0.9rem",
+                color: "#00d4aa",
+              }}
+            >
+              📅 DAILY STATS
+            </h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: isMobile
+                  ? "repeat(2, 1fr)"
+                  : "repeat(3, 1fr)",
+                gap: isMobile ? "10px" : "12px",
+              }}
+            >
+              {[
+                {
+                  label: "Days In",
+                  value: daysElapsed + 1,
+                  emoji: "📅",
+                  color: "#f093fb",
+                },
+                {
+                  label: "Days Left",
+                  value: timeLeft.labDays || 0,
+                  emoji: "⏳",
+                  color: "#4facfe",
+                },
+                {
+                  label: "Hours Fasted",
+                  value: ((daysElapsed + 1) * 18).toLocaleString(),
+                  emoji: "🕐",
+                  color: "#fbbf24",
+                },
+                {
+                  label: "Carbs Avoided",
+                  value: `${((daysElapsed + 1) * 250).toLocaleString()}g`,
+                  emoji: "🚫",
+                  color: "#f5576c",
+                },
+                {
+                  label: "Fat Burned",
+                  value: `${(totalWeightLost * 0.7).toFixed(1)} lbs`,
+                  emoji: "🔥",
+                  color: "#00d4aa",
+                },
+              ].map((stat, i) => (
+                <div key={i} style={{ textAlign: "center", padding: "10px" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "1.2rem" : "1.5rem",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {stat.emoji}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "1rem" : "1.2rem",
+                      fontWeight: "800",
+                      color: stat.color,
+                    }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.6rem" : "0.7rem",
+                      color: "#888",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* April 15 Projections */}
+          <div style={styles.card}>
+            <h3
+              style={{
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.85rem" : "0.9rem",
+                color: "#00d4aa",
+              }}
+            >
+              🩺 APRIL 15 LAB PROJECTIONS
+            </h3>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              {[
+                {
+                  test: "A1C",
+                  before: "11.5%",
+                  after: "7.0-8.0%",
+                  color: "#f5576c",
+                },
+                {
+                  test: "Fasting Glucose",
+                  before: "184",
+                  after: "95-115",
+                  color: "#4facfe",
+                },
+                {
+                  test: "Weight",
+                  before: "210 lbs",
+                  after: "175-185 lbs",
+                  color: "#00d4aa",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: isMobile ? "10px" : "12px",
+                    background: "rgba(0,0,0,0.2)",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontWeight: "600",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
+                    }}
+                  >
+                    {item.test}
+                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#888",
+                        textDecoration: "line-through",
+                        fontSize: isMobile ? "0.75rem" : "0.85rem",
+                      }}
+                    >
+                      {item.before}
+                    </span>
+                    <span style={{ color: "#888" }}>→</span>
+                    <span
+                      style={{
+                        color: item.color,
+                        fontWeight: "700",
+                        fontSize: isMobile ? "0.85rem" : "0.95rem",
+                      }}
+                    >
+                      {item.after}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* BADGES TAB */}
+      {activeTab === "badges" && (
+        <div style={styles.card}>
+          <h3
+            style={{
+              margin: "0 0 12px",
+              fontSize: isMobile ? "0.85rem" : "0.9rem",
+              color: "#00d4aa",
+            }}
+          >
+            🏅 ACHIEVEMENTS ({unlockedCount}/{achievements.length})
+          </h3>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile
+                ? "repeat(2, 1fr)"
+                : "repeat(3, 1fr)",
+              gap: isMobile ? "8px" : "10px",
+            }}
+          >
+            {achievements.map((a) => {
+              const unlocked = daysElapsed >= a.day;
+              return (
+                <div
+                  key={a.id}
+                  style={{
+                    background: unlocked
+                      ? "rgba(0,212,170,0.1)"
+                      : "rgba(255,255,255,0.02)",
+                    borderRadius: isMobile ? "10px" : "12px",
+                    padding: isMobile ? "10px" : "14px",
+                    textAlign: "center",
+                    border: unlocked
+                      ? "1px solid rgba(0,212,170,0.3)"
+                      : "1px solid rgba(255,255,255,0.05)",
+                    opacity: unlocked ? 1 : 0.5,
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: isMobile ? "1.5rem" : "2rem",
+                      marginBottom: "6px",
+                      filter: unlocked ? "none" : "grayscale(100%)",
+                    }}
+                  >
+                    {a.icon}
+                  </div>
+                  <div
+                    style={{
+                      fontWeight: "700",
+                      fontSize: isMobile ? "0.7rem" : "0.8rem",
+                      color: unlocked ? "#fff" : "#666",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {a.name}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.6rem" : "0.65rem",
+                      color: unlocked ? "#00d4aa" : "#555",
+                    }}
+                  >
+                    {unlocked ? "✓ Unlocked!" : `Day ${a.day}`}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       )}
 
       {/* REPORTS TAB */}
