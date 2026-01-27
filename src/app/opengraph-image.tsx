@@ -14,65 +14,56 @@ export default async function Image() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #0d1117 0%, #161b22 100%)",
+          background: "#ffffff",
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           fontFamily: "system-ui, sans-serif",
+          position: "relative",
         }}
       >
-        {/* Logo icon */}
+        {/* D - Red, top-left */}
         <div
           style={{
-            width: 200,
-            height: 200,
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #00d4aa 0%, #00a080 100%)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 50,
-            boxShadow: "0 30px 80px rgba(0,212,170,0.4)",
+            position: "absolute",
+            top: 100,
+            left: 80,
+            fontSize: 180,
+            fontWeight: 900,
+            color: "#e53935",
           }}
         >
-          <svg
-            width="100"
-            height="100"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="6 12 10 16 18 8" />
-          </svg>
+          D
         </div>
 
-        {/* Title */}
+        {/* R - Blue, center */}
         <div
           style={{
-            fontSize: 48,
-            fontWeight: 800,
-            color: "#ffffff",
-            textAlign: "center",
-            lineHeight: 1.2,
+            position: "absolute",
+            top: 210,
+            left: 220,
+            fontSize: 180,
+            fontWeight: 900,
+            color: "#1e88e5",
           }}
         >
-          DIABETES
+          R
         </div>
+
+        {/* T - Green, bottom-right */}
         <div
           style={{
-            fontSize: 48,
-            fontWeight: 800,
-            color: "#00d4aa",
-            textAlign: "center",
+            position: "absolute",
+            top: 320,
+            left: 360,
+            fontSize: 180,
+            fontWeight: 900,
+            color: "#00c853",
           }}
         >
-          REVERSAL
+          T
         </div>
       </div>
     ),
