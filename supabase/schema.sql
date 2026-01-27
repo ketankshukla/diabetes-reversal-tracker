@@ -5,8 +5,8 @@
 CREATE TABLE weekly_measurements (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   measurement_date DATE NOT NULL UNIQUE,  -- Always a Saturday
-  weight_lbs DECIMAL(5,1) NOT NULL,       -- e.g., 210.0
-  waist_inches DECIMAL(4,1),              -- e.g., 38.5 (optional initially)
+  weight_lbs DECIMAL(6,2) NOT NULL,       -- e.g., 210.00 (2 decimal places)
+  waist_inches DECIMAL(5,2),              -- e.g., 45.00 (2 decimal places, optional)
   notes TEXT,                              -- Optional notes
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -15,9 +15,13 @@ CREATE TABLE weekly_measurements (
 -- Create index for faster date queries
 CREATE INDEX idx_measurements_date ON weekly_measurements(measurement_date DESC);
 
--- Insert the starting measurement (January 24, 2026 - Saturday)
-INSERT INTO weekly_measurements (measurement_date, weight_lbs, waist_inches, notes)
-VALUES ('2026-01-24', 210.0, 40.0, 'Starting weight - Day 1 of journey');
+-- NOTE: Starting values are hardcoded in the app:
+-- - Starting weight: 210.00 lbs
+-- - Starting waist: 45.00 inches
+-- - Journey start: January 24, 2026 (Saturday)
+-- - First weigh-in: January 31, 2026 (Saturday) - end of Week 1
+-- 
+-- The database starts empty. Users enter their first weigh-in on Saturday, Jan 31, 2026.
 
 -- Create function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
