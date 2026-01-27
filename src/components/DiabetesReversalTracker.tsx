@@ -870,12 +870,12 @@ const DiabetesReversalTracker = ({
       {/* DASHBOARD TAB */}
       {activeTab === "dashboard" && (
         <>
-          {/* Countdown Timers - Big Cards */}
+          {/* Countdown Timers - Grid Layout */}
           <div style={{ marginBottom: "16px" }}>
             <h3
               style={{
-                margin: "0 0 16px",
-                fontSize: "1rem",
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.9rem" : "1rem",
                 color: "#00d4aa",
                 fontWeight: "700",
               }}
@@ -883,231 +883,242 @@ const DiabetesReversalTracker = ({
               🏁 COUNTDOWN TIMERS
             </h3>
 
-            {/* Lab Test Countdown Card */}
             <div
               style={{
-                background:
-                  "linear-gradient(135deg, rgba(245,87,108,0.15) 0%, rgba(245,87,108,0.05) 100%)",
-                borderRadius: isMobile ? "12px" : "16px",
-                padding: isMobile ? "14px" : "20px",
-                marginBottom: "12px",
-                border: "1px solid rgba(245,87,108,0.3)",
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+                gap: isMobile ? "10px" : "12px",
               }}
             >
+              {/* Lab Test Timer */}
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  marginBottom: "12px",
-                }}
-              >
-                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
-                  🩺
-                </span>
-                <div>
-                  <div
-                    style={{
-                      fontSize: isMobile ? "0.65rem" : "0.75rem",
-                      color: "#888",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Lab Test
-                  </div>
-                  <div
-                    style={{
-                      fontSize: isMobile ? "0.8rem" : "0.9rem",
-                      color: "#f5576c",
-                      fontWeight: "600",
-                    }}
-                  >
-                    April 15, 2026
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  fontSize: isMobile ? "1.5rem" : "2.5rem",
-                  fontWeight: "800",
-                  color: "#f5576c",
-                  textAlign: "center",
-                  marginBottom: "12px",
-                  fontFamily: "monospace",
-                }}
-              >
-                {timeLeft.labDays}d {timeLeft.labHours}h {timeLeft.labMinutes}m{" "}
-                {timeLeft.labSeconds}s
-              </div>
-              <div
-                style={{
-                  ...styles.progressBar(),
-                  height: "10px",
-                  borderRadius: "5px",
+                  background:
+                    "linear-gradient(135deg, rgba(245,87,108,0.15) 0%, rgba(245,87,108,0.05) 100%)",
+                  borderRadius: "12px",
+                  padding: isMobile ? "12px" : "14px",
+                  border: "1px solid rgba(245,87,108,0.3)",
                 }}
               >
                 <div
                   style={{
-                    ...styles.progressFill(
-                      100 - (timeLeft.labDays / 82) * 100,
-                      "#f5576c"
-                    ),
-                    borderRadius: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    marginBottom: "10px",
                   }}
-                />
+                >
+                  <span style={{ fontSize: isMobile ? "1.1rem" : "1.2rem" }}>
+                    🩺
+                  </span>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: isMobile ? "0.6rem" : "0.65rem",
+                        color: "#888",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.03em",
+                      }}
+                    >
+                      Lab Test
+                    </div>
+                    <div
+                      style={{
+                        fontSize: isMobile ? "0.7rem" : "0.75rem",
+                        color: "#f5576c",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Apr 15, 2026
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.1rem",
+                    fontWeight: "800",
+                    color: "#f5576c",
+                    textAlign: "center",
+                    marginBottom: "10px",
+                    fontFamily: "monospace",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {timeLeft.labDays}d {timeLeft.labHours}h
+                  <br />
+                  {timeLeft.labMinutes}m {timeLeft.labSeconds}s
+                </div>
+                <div
+                  style={{
+                    ...styles.progressBar(),
+                    height: "6px",
+                    borderRadius: "3px",
+                  }}
+                >
+                  <div
+                    style={{
+                      ...styles.progressFill(
+                        100 - (timeLeft.labDays / 82) * 100,
+                        "#f5576c"
+                      ),
+                      borderRadius: "3px",
+                    }}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* 6-Pack Countdown Card */}
-            <div
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(79,172,254,0.15) 0%, rgba(79,172,254,0.05) 100%)",
-                borderRadius: isMobile ? "12px" : "16px",
-                padding: isMobile ? "14px" : "20px",
-                marginBottom: "12px",
-                border: "1px solid rgba(79,172,254,0.3)",
-              }}
-            >
+              {/* 6-Pack Timer */}
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  marginBottom: "12px",
-                }}
-              >
-                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
-                  💪
-                </span>
-                <div>
-                  <div
-                    style={{
-                      fontSize: isMobile ? "0.65rem" : "0.75rem",
-                      color: "#888",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    6-Pack Goal
-                  </div>
-                  <div
-                    style={{
-                      fontSize: isMobile ? "0.8rem" : "0.9rem",
-                      color: "#4facfe",
-                      fontWeight: "600",
-                    }}
-                  >
-                    August 31, 2026
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  fontSize: isMobile ? "1.5rem" : "2.5rem",
-                  fontWeight: "800",
-                  color: "#4facfe",
-                  textAlign: "center",
-                  marginBottom: "12px",
-                  fontFamily: "monospace",
-                }}
-              >
-                {timeLeft.sixPackDays}d {timeLeft.sixPackHours}h{" "}
-                {timeLeft.sixPackMinutes}m {timeLeft.sixPackSeconds}s
-              </div>
-              <div
-                style={{
-                  ...styles.progressBar(),
-                  height: "10px",
-                  borderRadius: "5px",
+                  background:
+                    "linear-gradient(135deg, rgba(79,172,254,0.15) 0%, rgba(79,172,254,0.05) 100%)",
+                  borderRadius: "12px",
+                  padding: isMobile ? "12px" : "14px",
+                  border: "1px solid rgba(79,172,254,0.3)",
                 }}
               >
                 <div
                   style={{
-                    ...styles.progressFill(
-                      100 - (timeLeft.sixPackDays / 220) * 100,
-                      "#4facfe"
-                    ),
-                    borderRadius: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    marginBottom: "10px",
                   }}
-                />
+                >
+                  <span style={{ fontSize: isMobile ? "1.1rem" : "1.2rem" }}>
+                    💪
+                  </span>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: isMobile ? "0.6rem" : "0.65rem",
+                        color: "#888",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.03em",
+                      }}
+                    >
+                      6-Pack Goal
+                    </div>
+                    <div
+                      style={{
+                        fontSize: isMobile ? "0.7rem" : "0.75rem",
+                        color: "#4facfe",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Aug 31, 2026
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.1rem",
+                    fontWeight: "800",
+                    color: "#4facfe",
+                    textAlign: "center",
+                    marginBottom: "10px",
+                    fontFamily: "monospace",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {timeLeft.sixPackDays}d {timeLeft.sixPackHours}h
+                  <br />
+                  {timeLeft.sixPackMinutes}m {timeLeft.sixPackSeconds}s
+                </div>
+                <div
+                  style={{
+                    ...styles.progressBar(),
+                    height: "6px",
+                    borderRadius: "3px",
+                  }}
+                >
+                  <div
+                    style={{
+                      ...styles.progressFill(
+                        100 - (timeLeft.sixPackDays / 220) * 100,
+                        "#4facfe"
+                      ),
+                      borderRadius: "3px",
+                    }}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Remission Countdown Card */}
-            <div
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(0,212,170,0.15) 0%, rgba(0,212,170,0.05) 100%)",
-                borderRadius: isMobile ? "12px" : "16px",
-                padding: isMobile ? "14px" : "20px",
-                marginBottom: "12px",
-                border: "1px solid rgba(0,212,170,0.3)",
-              }}
-            >
+              {/* Metformin Freedom Timer */}
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  marginBottom: "12px",
-                }}
-              >
-                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
-                  🏆
-                </span>
-                <div>
-                  <div
-                    style={{
-                      fontSize: isMobile ? "0.65rem" : "0.75rem",
-                      color: "#888",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Metformin Freedom
-                  </div>
-                  <div
-                    style={{
-                      fontSize: isMobile ? "0.8rem" : "0.9rem",
-                      color: "#00d4aa",
-                      fontWeight: "600",
-                    }}
-                  >
-                    January 23, 2027
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  fontSize: isMobile ? "1.5rem" : "2.5rem",
-                  fontWeight: "800",
-                  color: "#00d4aa",
-                  textAlign: "center",
-                  marginBottom: "12px",
-                  fontFamily: "monospace",
-                }}
-              >
-                {timeLeft.remissionDays}d {timeLeft.remissionHours}h{" "}
-                {timeLeft.remissionMinutes}m {timeLeft.remissionSeconds}s
-              </div>
-              <div
-                style={{
-                  ...styles.progressBar(),
-                  height: "10px",
-                  borderRadius: "5px",
+                  background:
+                    "linear-gradient(135deg, rgba(0,212,170,0.15) 0%, rgba(0,212,170,0.05) 100%)",
+                  borderRadius: "12px",
+                  padding: isMobile ? "12px" : "14px",
+                  border: "1px solid rgba(0,212,170,0.3)",
                 }}
               >
                 <div
                   style={{
-                    ...styles.progressFill(
-                      100 - (timeLeft.remissionDays / 365) * 100,
-                      "#00d4aa"
-                    ),
-                    borderRadius: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    marginBottom: "10px",
                   }}
-                />
+                >
+                  <span style={{ fontSize: isMobile ? "1.1rem" : "1.2rem" }}>
+                    🏆
+                  </span>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: isMobile ? "0.6rem" : "0.65rem",
+                        color: "#888",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.03em",
+                      }}
+                    >
+                      Metformin Freedom
+                    </div>
+                    <div
+                      style={{
+                        fontSize: isMobile ? "0.7rem" : "0.75rem",
+                        color: "#00d4aa",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Jan 23, 2027
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.1rem",
+                    fontWeight: "800",
+                    color: "#00d4aa",
+                    textAlign: "center",
+                    marginBottom: "10px",
+                    fontFamily: "monospace",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {timeLeft.remissionDays}d {timeLeft.remissionHours}h
+                  <br />
+                  {timeLeft.remissionMinutes}m {timeLeft.remissionSeconds}s
+                </div>
+                <div
+                  style={{
+                    ...styles.progressBar(),
+                    height: "6px",
+                    borderRadius: "3px",
+                  }}
+                >
+                  <div
+                    style={{
+                      ...styles.progressFill(
+                        100 - (timeLeft.remissionDays / 365) * 100,
+                        "#00d4aa"
+                      ),
+                      borderRadius: "3px",
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
