@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { WeightEntry, SaturdayWeek, WeightStats } from "@/types";
-import { getWeightEntries, upsertWeightEntry } from "@/lib/supabase";
+import { getWeightEntries, upsertWeightEntry, supabase } from "@/lib/supabase";
 import {
   generateAllSaturdays,
   mapEntriesToSaturdays,
@@ -47,6 +47,24 @@ export default function WeightLogPage() {
 
   useEffect(() => {
     loadData();
+
+    // Subscribe to real-time updates on the weekly_measurements table
+    const channel = supabase
+      .channel("weight_log_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "weekly_measurements" },
+        () => {
+          // Refetch all data when any change occurs
+          loadData();
+        }
+      )
+      .subscribe();
+
+    // Cleanup subscription on unmount
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const handleSave = async (

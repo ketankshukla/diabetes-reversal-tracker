@@ -34,10 +34,6 @@ const DiabetesReversalTracker = ({
     daysElapsed: 0,
   });
 
-  // Daily checklist with dates
-  const [dailyLogs, setDailyLogs] = useState<any>({});
-  const [selectedDate, setSelectedDate] = useState("2026-01-26"); // Default, updated on client
-
   const checklistItems = [
     {
       id: "morningVacuum",
@@ -94,11 +90,6 @@ const DiabetesReversalTracker = ({
       emoji: "🌙",
     },
   ];
-
-  // Set actual date on client side to avoid hydration mismatch
-  useEffect(() => {
-    setSelectedDate(new Date().toISOString().split("T")[0]);
-  }, []);
 
   // Timer effect
   useEffect(() => {
@@ -217,23 +208,6 @@ const DiabetesReversalTracker = ({
     100,
     ((startingWeight - currentWeight) / (startingWeight - ultimateWeight)) * 100
   ).toFixed(1);
-
-  // Toggle checklist item
-  const toggleChecklist = (itemId: string) => {
-    setDailyLogs((prev: any) => ({
-      ...prev,
-      [selectedDate]: {
-        ...prev[selectedDate],
-        [itemId]: !prev[selectedDate]?.[itemId],
-      },
-    }));
-  };
-
-  // Get completion count for a date
-  const getCompletionCount = (date: string) => {
-    const log = dailyLogs[date] || {};
-    return Object.values(log).filter(Boolean).length;
-  };
 
   // Exercise schedule by day
   const getExercisesForDay = (dayOfWeek: number) => {
@@ -765,7 +739,6 @@ const DiabetesReversalTracker = ({
       <div style={styles.tabs}>
         {[
           { id: "dashboard", label: "📊 Dashboard" },
-          { id: "checklist", label: "✅ Daily" },
           { id: "exercises", label: "💪 Exercises" },
           { id: "reports", label: "📋 Reports" },
         ].map((tab) => (
@@ -1419,8 +1392,13 @@ const DiabetesReversalTracker = ({
               </tbody>
             </table>
           </div>
+        </>
+      )}
 
-          {/* Today's Checklist Summary */}
+      {/* EXERCISES TAB */}
+      {activeTab === "exercises" && (
+        <>
+          {/* Daily Routine Reference */}
           <div style={styles.card}>
             <h3
               style={{
@@ -1429,177 +1407,42 @@ const DiabetesReversalTracker = ({
                 color: "#00d4aa",
               }}
             >
-              ✅ TODAY'S PROGRESS
+              📋 DAILY ROUTINE REFERENCE
             </h3>
-            <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-              <div
-                style={{
-                  width: "60px",
-                  height: "60px",
-                  borderRadius: "50%",
-                  background: `conic-gradient(#00d4aa ${
-                    (getCompletionCount(selectedDate) / checklistItems.length) *
-                    360
-                  }deg, rgba(255,255,255,0.1) 0deg)`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+            >
+              {checklistItems.map((item) => (
                 <div
+                  key={item.id}
                   style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "50%",
-                    background: "#1a1a2e",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.9rem",
-                    fontWeight: "700",
+                    gap: "10px",
+                    padding: "8px 12px",
+                    background: "rgba(255,255,255,0.03)",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(255,255,255,0.06)",
                   }}
                 >
-                  {getCompletionCount(selectedDate)}/{checklistItems.length}
-                </div>
-              </div>
-              <div>
-                <div style={{ fontSize: "1rem", fontWeight: "700" }}>
-                  {getCompletionCount(selectedDate) === checklistItems.length
-                    ? "🎉 ALL COMPLETE!"
-                    : getCompletionCount(selectedDate) >= 7
-                    ? "💪 Almost there!"
-                    : getCompletionCount(selectedDate) >= 4
-                    ? "👍 Good progress!"
-                    : "🚀 Keep going!"}
-                </div>
-                <div style={{ fontSize: "0.8rem", color: "#888" }}>
-                  {checklistItems.length - getCompletionCount(selectedDate)}{" "}
-                  tasks remaining today
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* CHECKLIST TAB */}
-      {activeTab === "checklist" && (
-        <>
-          {/* Date Selector */}
-          <div style={styles.card}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "12px",
-              }}
-            >
-              <h3 style={{ margin: 0, fontSize: "0.9rem", color: "#00d4aa" }}>
-                📅 SELECT DATE
-              </h3>
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                style={{ ...styles.input, width: "auto" }}
-              />
-            </div>
-            <p style={{ margin: 0, color: "#888", fontSize: "0.85rem" }}>
-              {new Date(selectedDate).toLocaleDateString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </p>
-          </div>
-
-          {/* Daily Checklist */}
-          <div style={styles.card}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "12px",
-              }}
-            >
-              <h3 style={{ margin: 0, fontSize: "0.9rem", color: "#00d4aa" }}>
-                ✅ DAILY CHECKLIST
-              </h3>
-              <span
-                style={{
-                  background:
-                    getCompletionCount(selectedDate) === checklistItems.length
-                      ? "#00d4aa"
-                      : "rgba(255,255,255,0.1)",
-                  color:
-                    getCompletionCount(selectedDate) === checklistItems.length
-                      ? "#000"
-                      : "#888",
-                  padding: "4px 10px",
-                  borderRadius: "20px",
-                  fontSize: "0.75rem",
-                  fontWeight: "700",
-                }}
-              >
-                {getCompletionCount(selectedDate)}/{checklistItems.length}
-              </span>
-            </div>
-
-            {checklistItems.map((item) => (
-              <div
-                key={item.id}
-                style={styles.checkItem(dailyLogs[selectedDate]?.[item.id])}
-                onClick={() => toggleChecklist(item.id)}
-              >
-                <div
-                  style={styles.checkbox(dailyLogs[selectedDate]?.[item.id])}
-                >
-                  {dailyLogs[selectedDate]?.[item.id] && "✓"}
-                </div>
-                <span style={{ fontSize: "1.3rem" }}>{item.emoji}</span>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      fontWeight: "600",
-                      textDecoration: dailyLogs[selectedDate]?.[item.id]
-                        ? "line-through"
-                        : "none",
-                      color: dailyLogs[selectedDate]?.[item.id]
-                        ? "#00d4aa"
-                        : "#fff",
-                    }}
-                  >
-                    {item.label}
-                  </div>
-                  <div style={{ fontSize: "0.75rem", color: "#666" }}>
-                    {item.time}
+                  <span style={{ fontSize: "1.2rem" }}>{item.emoji}</span>
+                  <div style={{ flex: 1 }}>
+                    <div
+                      style={{
+                        fontWeight: "500",
+                        color: "#fff",
+                        fontSize: "0.85rem",
+                      }}
+                    >
+                      {item.label}
+                    </div>
+                    <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                      {item.time}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      {/* EXERCISES TAB */}
-      {activeTab === "exercises" && (
-        <>
-          <div style={styles.card}>
-            <h3
-              style={{ margin: "0 0 5px", fontSize: "1rem", color: "#00d4aa" }}
-            >
-              📅 {dayNames[todayDayOfWeek].toUpperCase()}'S WORKOUT
-            </h3>
-            <p
-              style={{ margin: "0 0 15px", color: "#888", fontSize: "0.8rem" }}
-            >
-              {todayDayOfWeek === 0
-                ? "🧘 Rest Day - Light core only"
-                : "💪 Full workout day"}
-            </p>
+              ))}
+            </div>
           </div>
 
           {/* Morning Session */}
