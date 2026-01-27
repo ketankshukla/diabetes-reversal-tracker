@@ -18,7 +18,21 @@ const DiabetesReversalTracker = ({
 
   // State
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [timeLeft, setTimeLeft] = useState<any>({});
+  const [timeLeft, setTimeLeft] = useState<any>({
+    labDays: 0,
+    labHours: 0,
+    labMinutes: 0,
+    labSeconds: 0,
+    sixPackDays: 0,
+    sixPackHours: 0,
+    sixPackMinutes: 0,
+    sixPackSeconds: 0,
+    remissionDays: 0,
+    remissionHours: 0,
+    remissionMinutes: 0,
+    remissionSeconds: 0,
+    daysElapsed: 0,
+  });
 
   // Daily checklist with dates
   const [dailyLogs, setDailyLogs] = useState<any>({});
