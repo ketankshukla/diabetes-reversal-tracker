@@ -101,10 +101,25 @@ const DiabetesReversalTracker = ({
           0,
           Math.floor(sixPackDiff / (1000 * 60 * 60 * 24))
         ),
+        sixPackHours: Math.max(
+          0,
+          Math.floor((sixPackDiff / (1000 * 60 * 60)) % 24)
+        ),
+        sixPackMinutes: Math.max(0, Math.floor((sixPackDiff / 1000 / 60) % 60)),
+        sixPackSeconds: Math.max(0, Math.floor((sixPackDiff / 1000) % 60)),
         remissionDays: Math.max(
           0,
           Math.floor(remissionDiff / (1000 * 60 * 60 * 24))
         ),
+        remissionHours: Math.max(
+          0,
+          Math.floor((remissionDiff / (1000 * 60 * 60)) % 24)
+        ),
+        remissionMinutes: Math.max(
+          0,
+          Math.floor((remissionDiff / 1000 / 60) % 60)
+        ),
+        remissionSeconds: Math.max(0, Math.floor((remissionDiff / 1000) % 60)),
         daysElapsed: Math.floor(elapsed / (1000 * 60 * 60 * 24)),
       });
     }, 1000);
@@ -889,7 +904,8 @@ const DiabetesReversalTracker = ({
                   fontFamily: "monospace",
                 }}
               >
-                {timeLeft.sixPackDays} days
+                {timeLeft.sixPackDays}d {timeLeft.sixPackHours}h{" "}
+                {timeLeft.sixPackMinutes}m {timeLeft.sixPackSeconds}s
               </div>
               <div
                 style={{
@@ -962,7 +978,8 @@ const DiabetesReversalTracker = ({
                   fontFamily: "monospace",
                 }}
               >
-                {timeLeft.remissionDays} days
+                {timeLeft.remissionDays}d {timeLeft.remissionHours}h{" "}
+                {timeLeft.remissionMinutes}m {timeLeft.remissionSeconds}s
               </div>
               <div
                 style={{
@@ -984,81 +1001,297 @@ const DiabetesReversalTracker = ({
             </div>
           </div>
 
-          {/* Current Stats */}
+          {/* Current Stats - Redesigned with explanations */}
           <div style={styles.card}>
             <h3
               style={{
-                margin: "0 0 12px",
-                fontSize: "0.9rem",
+                margin: "0 0 16px",
+                fontSize: "1rem",
                 color: "#00d4aa",
+                fontWeight: "700",
               }}
             >
-              📈 CURRENT PROJECTIONS
+              📈 YOUR HEALTH SNAPSHOT
             </h3>
+            <p
+              style={{
+                fontSize: "0.8rem",
+                color: "#666",
+                marginBottom: "16px",
+                lineHeight: "1.4",
+              }}
+            >
+              Based on your weight loss progress, here's how your health markers
+              are estimated to improve:
+            </p>
+
+            {/* Weight Stats Row */}
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(2, 1fr)",
-                gap: "10px",
+                gap: "12px",
+                marginBottom: "16px",
               }}
             >
-              <div style={styles.statBox("#00d4aa")}>
+              <div
+                style={{
+                  background: "rgba(0,212,170,0.1)",
+                  borderRadius: "12px",
+                  padding: "16px",
+                  border: "1px solid rgba(0,212,170,0.2)",
+                }}
+              >
                 <div
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: "0.7rem",
+                    color: "#888",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    marginBottom: "4px",
+                  }}
+                >
+                  Current Weight
+                </div>
+                <div
+                  style={{
+                    fontSize: "2rem",
                     fontWeight: "800",
                     color: "#00d4aa",
                   }}
                 >
-                  {currentWeight}
+                  {currentWeight}{" "}
+                  <span style={{ fontSize: "0.9rem", fontWeight: "400" }}>
+                    lbs
+                  </span>
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "#888" }}>
-                  CURRENT LBS
-                </div>
-              </div>
-              <div style={styles.statBox("#f5576c")}>
                 <div
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: "0.75rem",
+                    color: "#666",
+                    marginTop: "4px",
+                  }}
+                >
+                  Started at {startingWeight} lbs
+                </div>
+              </div>
+
+              <div
+                style={{
+                  background: "rgba(245,87,108,0.1)",
+                  borderRadius: "12px",
+                  padding: "16px",
+                  border: "1px solid rgba(245,87,108,0.2)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "0.7rem",
+                    color: "#888",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    marginBottom: "4px",
+                  }}
+                >
+                  Total Lost
+                </div>
+                <div
+                  style={{
+                    fontSize: "2rem",
                     fontWeight: "800",
                     color: "#f5576c",
                   }}
                 >
-                  {totalWeightLost}
+                  {totalWeightLost}{" "}
+                  <span style={{ fontSize: "0.9rem", fontWeight: "400" }}>
+                    lbs
+                  </span>
                 </div>
-                <div style={{ fontSize: "0.7rem", color: "#888" }}>
-                  LBS LOST
-                </div>
-              </div>
-              <div style={styles.statBox("#4facfe")}>
                 <div
                   style={{
-                    fontSize: "1.5rem",
-                    fontWeight: "800",
-                    color: "#4facfe",
+                    fontSize: "0.75rem",
+                    color: "#666",
+                    marginTop: "4px",
                   }}
                 >
-                  {projectedA1C}%
-                </div>
-                <div style={{ fontSize: "0.7rem", color: "#888" }}>
-                  PROJECTED A1C
-                </div>
-              </div>
-              <div style={styles.statBox("#fbbf24")}>
-                <div
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: "800",
-                    color: "#fbbf24",
-                  }}
-                >
-                  {estimatedBodyFat}%
-                </div>
-                <div style={{ fontSize: "0.7rem", color: "#888" }}>
-                  EST. BODY FAT
+                  ~{avgWeeklyLoss.toFixed(1)} lbs/week average
                 </div>
               </div>
             </div>
+
+            {/* Health Projections */}
+            <div
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                borderRadius: "12px",
+                padding: "16px",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#888",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                  marginBottom: "12px",
+                }}
+              >
+                Estimated Health Improvements
+              </div>
+
+              {/* A1C Projection */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "12px",
+                  paddingBottom: "12px",
+                  borderBottom: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#fff",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Projected A1C
+                  </div>
+                  <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                    Started at 11.5% • Goal: under 5.7%
+                  </div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div
+                    style={{
+                      fontSize: "1.5rem",
+                      fontWeight: "800",
+                      color: "#4facfe",
+                    }}
+                  >
+                    {projectedA1C}%
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.7rem",
+                      color:
+                        parseFloat(projectedA1C) <= 5.7 ? "#00d4aa" : "#fbbf24",
+                    }}
+                  >
+                    {parseFloat(projectedA1C) <= 5.7
+                      ? "✓ In remission range!"
+                      : `${(parseFloat(projectedA1C) - 5.7).toFixed(1)}% to go`}
+                  </div>
+                </div>
+              </div>
+
+              {/* Body Fat Estimate */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "12px",
+                  paddingBottom: "12px",
+                  borderBottom: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#fff",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Estimated Body Fat
+                  </div>
+                  <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                    Based on ~150 lbs lean mass
+                  </div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div
+                    style={{
+                      fontSize: "1.5rem",
+                      fontWeight: "800",
+                      color: "#fbbf24",
+                    }}
+                  >
+                    {estimatedBodyFat}%
+                  </div>
+                  <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                    {parseFloat(estimatedBodyFat) <= 15
+                      ? "Athletic range"
+                      : parseFloat(estimatedBodyFat) <= 20
+                      ? "Fit range"
+                      : "Working on it"}
+                  </div>
+                </div>
+              </div>
+
+              {/* Fasting Glucose */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: "0.9rem",
+                      color: "#fff",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Projected Fasting Glucose
+                  </div>
+                  <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                    Started at 184 mg/dL • Goal: under 100
+                  </div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div
+                    style={{
+                      fontSize: "1.5rem",
+                      fontWeight: "800",
+                      color: "#00d4aa",
+                    }}
+                  >
+                    {projectedGlucose}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.7rem",
+                      color: projectedGlucose <= 100 ? "#00d4aa" : "#fbbf24",
+                    }}
+                  >
+                    {projectedGlucose <= 100
+                      ? "✓ Normal range!"
+                      : `${projectedGlucose - 100} mg/dL to go`}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p
+              style={{
+                fontSize: "0.7rem",
+                color: "#555",
+                marginTop: "12px",
+                fontStyle: "italic",
+              }}
+            >
+              * Projections are estimates based on research showing weight loss
+              correlation with A1C and glucose improvements. Actual results may
+              vary.
+            </p>
           </div>
 
           {/* Goals Progress */}
