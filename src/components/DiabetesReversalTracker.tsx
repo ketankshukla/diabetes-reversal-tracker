@@ -33,6 +33,79 @@ const DiabetesReversalTracker = ({
     remissionSeconds: 0,
     daysElapsed: 0,
   });
+  const [expandedExercises, setExpandedExercises] = useState<Set<string>>(
+    new Set()
+  );
+
+  // Exercise instructions with detailed how-to
+  const exerciseInstructions: { [key: string]: string } = {
+    "Stomach Vacuum":
+      "1. Stand upright or lie on your back with knees bent.\n2. Exhale all the air from your lungs completely.\n3. Pull your belly button in toward your spine as far as possible.\n4. Hold this position while breathing shallowly.\n5. Release and repeat. Focus on pulling the transverse abdominis inward.",
+    Plank:
+      "1. Start in a push-up position with forearms on the ground.\n2. Keep your body in a straight line from head to heels.\n3. Engage your core by pulling your belly button toward your spine.\n4. Keep your hips level - don't let them sag or pike up.\n5. Hold the position while breathing steadily.",
+    "Dead Bug":
+      "1. Lie on your back with arms extended toward the ceiling.\n2. Lift your legs with knees bent at 90 degrees.\n3. Press your lower back firmly into the floor.\n4. Slowly extend one arm overhead while extending the opposite leg.\n5. Return to start and repeat on the other side. Keep your core braced throughout.",
+    "Bird Dog":
+      "1. Start on hands and knees with a flat back.\n2. Engage your core to stabilize your spine.\n3. Extend your right arm forward and left leg back simultaneously.\n4. Keep your hips and shoulders square to the floor.\n5. Hold briefly, return to start, and switch sides.",
+    "Leg Raises":
+      "1. Lie flat on your back with legs straight.\n2. Place your hands under your glutes for support.\n3. Keep your lower back pressed into the floor.\n4. Lift both legs up to 90 degrees while keeping them straight.\n5. Lower slowly without letting your lower back arch off the floor.",
+    "Bicycle Crunches":
+      "1. Lie on your back with hands behind your head.\n2. Lift your shoulders off the ground.\n3. Bring one knee toward your chest while rotating to touch the opposite elbow to it.\n4. Extend that leg while bringing the other knee in and rotating the other way.\n5. Keep the movement controlled and avoid pulling on your neck.",
+    "Mountain Climbers":
+      "1. Start in a high plank position with hands under shoulders.\n2. Keep your core tight and body in a straight line.\n3. Drive one knee toward your chest.\n4. Quickly switch legs, driving the other knee forward.\n5. Continue alternating at a quick pace while maintaining form.",
+    "Reverse Crunches":
+      "1. Lie on your back with knees bent and feet off the floor.\n2. Place your arms at your sides for stability.\n3. Contract your abs to curl your hips off the floor toward your chest.\n4. Lower your hips back down with control.\n5. Focus on using your lower abs, not momentum.",
+    "Side Plank":
+      "1. Lie on your side with your elbow directly under your shoulder.\n2. Stack your feet or stagger them for stability.\n3. Lift your hips to form a straight line from head to feet.\n4. Keep your core engaged and don't let your hips drop.\n5. Hold the position while breathing steadily.",
+    "Hollow Body Hold":
+      "1. Lie on your back with arms extended overhead.\n2. Press your lower back firmly into the floor.\n3. Lift your shoulders and legs off the ground.\n4. Your body should form a banana shape.\n5. Hold this position while keeping your lower back pressed down.",
+    "Flutter Kicks":
+      "1. Lie on your back with legs extended.\n2. Place hands under your glutes for support.\n3. Lift both legs slightly off the ground.\n4. Alternately kick legs up and down in a small range.\n5. Keep your lower back pressed into the floor throughout.",
+    "Russian Twists":
+      "1. Sit with knees bent and feet off the floor (or grounded for easier version).\n2. Lean back slightly to engage your core.\n3. Hold your hands together or hold a weight.\n4. Rotate your torso to touch the floor on each side.\n5. Keep your core tight and movement controlled.",
+    "Bodyweight Squats":
+      "1. Stand with feet shoulder-width apart, toes slightly out.\n2. Keep your chest up and core engaged.\n3. Push your hips back and bend your knees to lower down.\n4. Go as deep as comfortable while keeping heels on floor.\n5. Drive through your heels to stand back up.",
+    Lunges:
+      "1. Stand tall with feet hip-width apart.\n2. Step forward with one leg.\n3. Lower your body until both knees are at 90 degrees.\n4. Keep your front knee over your ankle, not past your toes.\n5. Push through your front heel to return to standing.",
+    "Glute Bridges":
+      "1. Lie on your back with knees bent, feet flat on floor.\n2. Keep your arms at your sides.\n3. Squeeze your glutes and lift your hips toward the ceiling.\n4. Form a straight line from shoulders to knees at the top.\n5. Lower with control and repeat.",
+    "Calf Raises":
+      "1. Stand with feet hip-width apart.\n2. Rise up onto your toes as high as possible.\n3. Squeeze your calves at the top.\n4. Lower back down with control.\n5. For added difficulty, do one leg at a time.",
+    "Wall Sit":
+      "1. Stand with your back against a wall.\n2. Slide down until your thighs are parallel to the floor.\n3. Keep your knees at 90 degrees and over your ankles.\n4. Press your back flat against the wall.\n5. Hold the position, breathing steadily.",
+    "Push-ups":
+      "1. Start in a high plank with hands slightly wider than shoulders.\n2. Keep your body in a straight line from head to heels.\n3. Lower your chest toward the floor by bending your elbows.\n4. Keep elbows at about 45 degrees from your body.\n5. Push back up to the starting position.",
+    "Diamond Push-ups":
+      "1. Start in a push-up position.\n2. Place your hands close together, forming a diamond shape with thumbs and index fingers.\n3. Lower your chest toward your hands.\n4. Keep your elbows close to your body.\n5. Push back up. This targets your triceps more.",
+    "Pike Push-ups":
+      "1. Start in a downward dog position with hips high.\n2. Keep your legs as straight as possible.\n3. Bend your elbows to lower your head toward the floor.\n4. Your head should move forward, past your hands.\n5. Push back up. This targets your shoulders.",
+    "Tricep Dips":
+      "1. Sit on the edge of a chair or bench.\n2. Place your hands next to your hips, fingers forward.\n3. Slide your hips off the edge, supporting yourself with your arms.\n4. Lower your body by bending your elbows to 90 degrees.\n5. Push back up by straightening your arms.",
+    "Incline Push-ups":
+      "1. Place your hands on an elevated surface (bench, step, counter).\n2. Keep your body in a straight line.\n3. Lower your chest toward the surface.\n4. Push back up to the starting position.\n5. The higher the surface, the easier the exercise.",
+    "Pull-ups":
+      "1. Hang from a bar with hands shoulder-width apart, palms facing away.\n2. Engage your core and squeeze your shoulder blades together.\n3. Pull yourself up until your chin is over the bar.\n4. Lower with control.\n5. If needed, use a resistance band for assistance.",
+    "Inverted Rows":
+      "1. Set a bar at waist height (or use a sturdy table).\n2. Lie underneath and grab the bar with an overhand grip.\n3. Keep your body straight from head to heels.\n4. Pull your chest up to the bar.\n5. Lower with control. Bend knees to make it easier.",
+    "Superman Hold":
+      "1. Lie face down with arms extended overhead.\n2. Lift your arms, chest, and legs off the floor simultaneously.\n3. Squeeze your glutes and lower back.\n4. Hold the position at the top.\n5. Lower with control and repeat.",
+    "Doorframe Rows":
+      "1. Stand facing a doorframe or sturdy pole.\n2. Grab it at chest height with both hands.\n3. Lean back with arms straight, feet close to the base.\n4. Pull your chest toward the frame by bending your elbows.\n5. Lower with control and repeat.",
+    "Rear Delt Raises":
+      "1. Stand with feet hip-width apart, slight bend in knees.\n2. Hinge forward at the hips, back flat.\n3. Let arms hang down with slight bend in elbows.\n4. Raise arms out to the sides, squeezing shoulder blades.\n5. Lower with control.",
+  };
+
+  const toggleExercise = (exerciseName: string) => {
+    setExpandedExercises((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(exerciseName)) {
+        newSet.delete(exerciseName);
+      } else {
+        newSet.add(exerciseName);
+      }
+      return newSet;
+    });
+  };
 
   const checklistItems = [
     {
@@ -1459,6 +1532,7 @@ const DiabetesReversalTracker = ({
             <table style={styles.table}>
               <thead>
                 <tr>
+                  <th style={styles.th}></th>
                   <th style={styles.th}>Exercise</th>
                   <th style={styles.th}>Sets</th>
                   <th style={styles.th}>Reps/Time</th>
@@ -1467,16 +1541,78 @@ const DiabetesReversalTracker = ({
               </thead>
               <tbody>
                 {todayExercises.morning.map((ex: any, i: number) => (
-                  <tr key={i}>
-                    <td style={{ ...styles.td, fontWeight: "600" }}>
-                      {ex.name}
-                    </td>
-                    <td style={styles.td}>{ex.sets}</td>
-                    <td style={{ ...styles.td, color: "#f093fb" }}>
-                      {ex.reps}
-                    </td>
-                    <td style={{ ...styles.td, color: "#888" }}>{ex.rest}</td>
-                  </tr>
+                  <React.Fragment key={i}>
+                    <tr
+                      onClick={() => toggleExercise(`morning-${ex.name}`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <td
+                        style={{
+                          ...styles.td,
+                          width: "30px",
+                          padding: "8px 4px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            display: "inline-block",
+                            transition: "transform 0.2s",
+                            transform: expandedExercises.has(
+                              `morning-${ex.name}`
+                            )
+                              ? "rotate(90deg)"
+                              : "rotate(0deg)",
+                            color: "#f093fb",
+                          }}
+                        >
+                          ▶
+                        </span>
+                      </td>
+                      <td style={{ ...styles.td, fontWeight: "600" }}>
+                        {ex.name}
+                      </td>
+                      <td style={styles.td}>{ex.sets}</td>
+                      <td style={{ ...styles.td, color: "#f093fb" }}>
+                        {ex.reps}
+                      </td>
+                      <td style={{ ...styles.td, color: "#888" }}>{ex.rest}</td>
+                    </tr>
+                    {expandedExercises.has(`morning-${ex.name}`) &&
+                      exerciseInstructions[ex.name] && (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            style={{
+                              padding: "12px 16px",
+                              background: "rgba(240,147,251,0.1)",
+                              borderBottom: "1px solid rgba(255,255,255,0.1)",
+                              fontSize: "0.8rem",
+                              color: "#ccc",
+                              lineHeight: "1.6",
+                            }}
+                          >
+                            {exerciseInstructions[ex.name]
+                              .split("\n")
+                              .map((line, idx) => (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    marginBottom:
+                                      idx <
+                                      exerciseInstructions[ex.name].split("\n")
+                                        .length -
+                                        1
+                                        ? "6px"
+                                        : 0,
+                                  }}
+                                >
+                                  {line}
+                                </div>
+                              ))}
+                          </td>
+                        </tr>
+                      )}
+                  </React.Fragment>
                 ))}
               </tbody>
             </table>
@@ -1497,6 +1633,7 @@ const DiabetesReversalTracker = ({
               <table style={styles.table}>
                 <thead>
                   <tr>
+                    <th style={styles.th}></th>
                     <th style={styles.th}>Exercise</th>
                     <th style={styles.th}>Sets</th>
                     <th style={styles.th}>Reps/Time</th>
@@ -1506,18 +1643,82 @@ const DiabetesReversalTracker = ({
                 <tbody>
                   {todayExercises.midday[todayDayOfWeek].map(
                     (ex: any, i: number) => (
-                      <tr key={i}>
-                        <td style={{ ...styles.td, fontWeight: "600" }}>
-                          {ex.name}
-                        </td>
-                        <td style={styles.td}>{ex.sets}</td>
-                        <td style={{ ...styles.td, color: "#4facfe" }}>
-                          {ex.reps}
-                        </td>
-                        <td style={{ ...styles.td, color: "#888" }}>
-                          {ex.rest}
-                        </td>
-                      </tr>
+                      <React.Fragment key={i}>
+                        <tr
+                          onClick={() => toggleExercise(`midday-${ex.name}`)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <td
+                            style={{
+                              ...styles.td,
+                              width: "30px",
+                              padding: "8px 4px",
+                            }}
+                          >
+                            <span
+                              style={{
+                                display: "inline-block",
+                                transition: "transform 0.2s",
+                                transform: expandedExercises.has(
+                                  `midday-${ex.name}`
+                                )
+                                  ? "rotate(90deg)"
+                                  : "rotate(0deg)",
+                                color: "#4facfe",
+                              }}
+                            >
+                              ▶
+                            </span>
+                          </td>
+                          <td style={{ ...styles.td, fontWeight: "600" }}>
+                            {ex.name}
+                          </td>
+                          <td style={styles.td}>{ex.sets}</td>
+                          <td style={{ ...styles.td, color: "#4facfe" }}>
+                            {ex.reps}
+                          </td>
+                          <td style={{ ...styles.td, color: "#888" }}>
+                            {ex.rest}
+                          </td>
+                        </tr>
+                        {expandedExercises.has(`midday-${ex.name}`) &&
+                          exerciseInstructions[ex.name] && (
+                            <tr>
+                              <td
+                                colSpan={5}
+                                style={{
+                                  padding: "12px 16px",
+                                  background: "rgba(79,172,254,0.1)",
+                                  borderBottom:
+                                    "1px solid rgba(255,255,255,0.1)",
+                                  fontSize: "0.8rem",
+                                  color: "#ccc",
+                                  lineHeight: "1.6",
+                                }}
+                              >
+                                {exerciseInstructions[ex.name]
+                                  .split("\n")
+                                  .map((line, idx) => (
+                                    <div
+                                      key={idx}
+                                      style={{
+                                        marginBottom:
+                                          idx <
+                                          exerciseInstructions[ex.name].split(
+                                            "\n"
+                                          ).length -
+                                            1
+                                            ? "6px"
+                                            : 0,
+                                      }}
+                                    >
+                                      {line}
+                                    </div>
+                                  ))}
+                              </td>
+                            </tr>
+                          )}
+                      </React.Fragment>
                     )
                   )}
                 </tbody>
@@ -1546,6 +1747,7 @@ const DiabetesReversalTracker = ({
               <table style={styles.table}>
                 <thead>
                   <tr>
+                    <th style={styles.th}></th>
                     <th style={styles.th}>Exercise</th>
                     <th style={styles.th}>Sets</th>
                     <th style={styles.th}>Reps/Time</th>
@@ -1555,18 +1757,82 @@ const DiabetesReversalTracker = ({
                 <tbody>
                   {todayExercises.afternoon[todayDayOfWeek].map(
                     (ex: any, i: number) => (
-                      <tr key={i}>
-                        <td style={{ ...styles.td, fontWeight: "600" }}>
-                          {ex.name}
-                        </td>
-                        <td style={styles.td}>{ex.sets}</td>
-                        <td style={{ ...styles.td, color: "#00d4aa" }}>
-                          {ex.reps}
-                        </td>
-                        <td style={{ ...styles.td, color: "#888" }}>
-                          {ex.rest}
-                        </td>
-                      </tr>
+                      <React.Fragment key={i}>
+                        <tr
+                          onClick={() => toggleExercise(`afternoon-${ex.name}`)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <td
+                            style={{
+                              ...styles.td,
+                              width: "30px",
+                              padding: "8px 4px",
+                            }}
+                          >
+                            <span
+                              style={{
+                                display: "inline-block",
+                                transition: "transform 0.2s",
+                                transform: expandedExercises.has(
+                                  `afternoon-${ex.name}`
+                                )
+                                  ? "rotate(90deg)"
+                                  : "rotate(0deg)",
+                                color: "#00d4aa",
+                              }}
+                            >
+                              ▶
+                            </span>
+                          </td>
+                          <td style={{ ...styles.td, fontWeight: "600" }}>
+                            {ex.name}
+                          </td>
+                          <td style={styles.td}>{ex.sets}</td>
+                          <td style={{ ...styles.td, color: "#00d4aa" }}>
+                            {ex.reps}
+                          </td>
+                          <td style={{ ...styles.td, color: "#888" }}>
+                            {ex.rest}
+                          </td>
+                        </tr>
+                        {expandedExercises.has(`afternoon-${ex.name}`) &&
+                          exerciseInstructions[ex.name] && (
+                            <tr>
+                              <td
+                                colSpan={5}
+                                style={{
+                                  padding: "12px 16px",
+                                  background: "rgba(0,212,170,0.1)",
+                                  borderBottom:
+                                    "1px solid rgba(255,255,255,0.1)",
+                                  fontSize: "0.8rem",
+                                  color: "#ccc",
+                                  lineHeight: "1.6",
+                                }}
+                              >
+                                {exerciseInstructions[ex.name]
+                                  .split("\n")
+                                  .map((line, idx) => (
+                                    <div
+                                      key={idx}
+                                      style={{
+                                        marginBottom:
+                                          idx <
+                                          exerciseInstructions[ex.name].split(
+                                            "\n"
+                                          ).length -
+                                            1
+                                            ? "6px"
+                                            : 0,
+                                      }}
+                                    >
+                                      {line}
+                                    </div>
+                                  ))}
+                              </td>
+                            </tr>
+                          )}
+                      </React.Fragment>
                     )
                   )}
                 </tbody>
@@ -1594,6 +1860,7 @@ const DiabetesReversalTracker = ({
             <table style={styles.table}>
               <thead>
                 <tr>
+                  <th style={styles.th}></th>
                   <th style={styles.th}>Exercise</th>
                   <th style={styles.th}>Sets</th>
                   <th style={styles.th}>Reps/Time</th>
@@ -1602,16 +1869,78 @@ const DiabetesReversalTracker = ({
               </thead>
               <tbody>
                 {todayExercises.evening.map((ex: any, i: number) => (
-                  <tr key={i}>
-                    <td style={{ ...styles.td, fontWeight: "600" }}>
-                      {ex.name}
-                    </td>
-                    <td style={styles.td}>{ex.sets}</td>
-                    <td style={{ ...styles.td, color: "#a78bfa" }}>
-                      {ex.reps}
-                    </td>
-                    <td style={{ ...styles.td, color: "#888" }}>{ex.rest}</td>
-                  </tr>
+                  <React.Fragment key={i}>
+                    <tr
+                      onClick={() => toggleExercise(`evening-${ex.name}`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <td
+                        style={{
+                          ...styles.td,
+                          width: "30px",
+                          padding: "8px 4px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            display: "inline-block",
+                            transition: "transform 0.2s",
+                            transform: expandedExercises.has(
+                              `evening-${ex.name}`
+                            )
+                              ? "rotate(90deg)"
+                              : "rotate(0deg)",
+                            color: "#a78bfa",
+                          }}
+                        >
+                          ▶
+                        </span>
+                      </td>
+                      <td style={{ ...styles.td, fontWeight: "600" }}>
+                        {ex.name}
+                      </td>
+                      <td style={styles.td}>{ex.sets}</td>
+                      <td style={{ ...styles.td, color: "#a78bfa" }}>
+                        {ex.reps}
+                      </td>
+                      <td style={{ ...styles.td, color: "#888" }}>{ex.rest}</td>
+                    </tr>
+                    {expandedExercises.has(`evening-${ex.name}`) &&
+                      exerciseInstructions[ex.name] && (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            style={{
+                              padding: "12px 16px",
+                              background: "rgba(167,139,250,0.1)",
+                              borderBottom: "1px solid rgba(255,255,255,0.1)",
+                              fontSize: "0.8rem",
+                              color: "#ccc",
+                              lineHeight: "1.6",
+                            }}
+                          >
+                            {exerciseInstructions[ex.name]
+                              .split("\n")
+                              .map((line, idx) => (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    marginBottom:
+                                      idx <
+                                      exerciseInstructions[ex.name].split("\n")
+                                        .length -
+                                        1
+                                        ? "6px"
+                                        : 0,
+                                  }}
+                                >
+                                  {line}
+                                </div>
+                              ))}
+                          </td>
+                        </tr>
+                      )}
+                  </React.Fragment>
                 ))}
               </tbody>
             </table>
