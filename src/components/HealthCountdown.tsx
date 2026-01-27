@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect } from "react";
 
@@ -7,7 +7,7 @@ const HealthCountdown = () => {
   const labDate = new Date("2026-04-15T09:00:00");
   const sixPackDate = new Date("2026-08-31");
   const remissionDate = new Date("2027-01-23");
-  
+
   const [timeLeft, setTimeLeft] = useState({
     labDays: 0,
     labHours: 0,
@@ -27,14 +27,21 @@ const HealthCountdown = () => {
   const [currentQuote, setCurrentQuote] = useState(0);
   const [activeTab, setActiveTab] = useState("countdown");
   const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const quotes = [
     { text: "Every second without sugar, your body heals.", emoji: "✨" },
     { text: "You're not losing weight. You're gaining LIFE.", emoji: "🦁" },
     { text: "Your future self is thanking you right now.", emoji: "🙏" },
-    { text: "Discipline is choosing what you WANT over what you want NOW.", emoji: "💎" },
+    {
+      text: "Discipline is choosing what you WANT over what you want NOW.",
+      emoji: "💎",
+    },
     { text: "You didn't come this far to only come this far.", emoji: "🚀" },
-    { text: "The pain of discipline weighs ounces. The pain of regret weighs tons.", emoji: "⚖️" },
+    {
+      text: "The pain of discipline weighs ounces. The pain of regret weighs tons.",
+      emoji: "⚖️",
+    },
     { text: "Your doctor won't believe their eyes in April.", emoji: "👀" },
     { text: "Zero carbs. Zero sugar. ZERO LIMITS.", emoji: "🔥" },
     { text: "You are literally breathing out fat right now.", emoji: "💨" },
@@ -57,6 +64,7 @@ const HealthCountdown = () => {
   ];
 
   useEffect(() => {
+    setIsClient(true);
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -78,13 +86,28 @@ const HealthCountdown = () => {
         labHours: Math.max(0, Math.floor((labDiff / (1000 * 60 * 60)) % 24)),
         labMinutes: Math.max(0, Math.floor((labDiff / 1000 / 60) % 60)),
         labSeconds: Math.max(0, Math.floor((labDiff / 1000) % 60)),
-        sixPackDays: Math.max(0, Math.floor(sixPackDiff / (1000 * 60 * 60 * 24))),
-        sixPackHours: Math.max(0, Math.floor((sixPackDiff / (1000 * 60 * 60)) % 24)),
+        sixPackDays: Math.max(
+          0,
+          Math.floor(sixPackDiff / (1000 * 60 * 60 * 24))
+        ),
+        sixPackHours: Math.max(
+          0,
+          Math.floor((sixPackDiff / (1000 * 60 * 60)) % 24)
+        ),
         sixPackMinutes: Math.max(0, Math.floor((sixPackDiff / 1000 / 60) % 60)),
         sixPackSeconds: Math.max(0, Math.floor((sixPackDiff / 1000) % 60)),
-        remissionDays: Math.max(0, Math.floor(remissionDiff / (1000 * 60 * 60 * 24))),
-        remissionHours: Math.max(0, Math.floor((remissionDiff / (1000 * 60 * 60)) % 24)),
-        remissionMinutes: Math.max(0, Math.floor((remissionDiff / 1000 / 60) % 60)),
+        remissionDays: Math.max(
+          0,
+          Math.floor(remissionDiff / (1000 * 60 * 60 * 24))
+        ),
+        remissionHours: Math.max(
+          0,
+          Math.floor((remissionDiff / (1000 * 60 * 60)) % 24)
+        ),
+        remissionMinutes: Math.max(
+          0,
+          Math.floor((remissionDiff / 1000 / 60) % 60)
+        ),
         remissionSeconds: Math.max(0, Math.floor((remissionDiff / 1000) % 60)),
         daysElapsed: Math.floor(elapsed / (1000 * 60 * 60 * 24)),
       });
@@ -119,10 +142,15 @@ const HealthCountdown = () => {
   const daysElapsed = timeLeft.daysElapsed || 0;
   const unlockedCount = achievements.filter((a) => daysElapsed >= a.day).length;
 
-  const styles: Record<string, React.CSSProperties | ((arg: boolean | number | string) => React.CSSProperties)> = {
+  const styles: Record<
+    string,
+    | React.CSSProperties
+    | ((arg: boolean | number | string) => React.CSSProperties)
+  > = {
     container: {
       fontFamily: "'Inter', -apple-system, sans-serif",
-      background: "linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%)",
+      background:
+        "linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%)",
       minHeight: "100vh",
       padding: isMobile ? "10px" : "15px",
       color: "#fff",
@@ -170,7 +198,10 @@ const HealthCountdown = () => {
     flexShrink: 0,
   });
 
-  const progressFillStyle = (percent: number, color: string): React.CSSProperties => ({
+  const progressFillStyle = (
+    percent: number,
+    color: string
+  ): React.CSSProperties => ({
     width: `${Math.min(100, percent)}%`,
     height: "100%",
     background: color,
@@ -203,7 +234,11 @@ const HealthCountdown = () => {
           🏆 HEALTH VICTORY COUNTDOWN
         </h1>
         <p style={{ color: "#888", fontSize: isMobile ? "0.85rem" : "1rem" }}>
-          Day <span style={{ color: "#00d4aa", fontWeight: "700" }}>{daysElapsed + 1}</span> of Your Transformation
+          Day{" "}
+          <span style={{ color: "#00d4aa", fontWeight: "700" }}>
+            {daysElapsed + 1}
+          </span>{" "}
+          of Your Transformation
         </p>
       </div>
 
@@ -212,7 +247,10 @@ const HealthCountdown = () => {
         {[
           { id: "countdown", label: "🏁 Timers" },
           { id: "stats", label: "📊 Stats" },
-          { id: "achievements", label: `🏅 Badges (${unlockedCount}/${achievements.length})` },
+          {
+            id: "achievements",
+            label: `🏅 Badges (${unlockedCount}/${achievements.length})`,
+          },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -227,7 +265,9 @@ const HealthCountdown = () => {
       {/* Motivational Quote */}
       <div style={styles.card as React.CSSProperties}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <span style={{ fontSize: isMobile ? "1.5rem" : "2rem" }}>{quotes[currentQuote].emoji}</span>
+          <span style={{ fontSize: isMobile ? "1.5rem" : "2rem" }}>
+            {quotes[currentQuote].emoji}
+          </span>
           <p
             style={{
               fontSize: isMobile ? "0.85rem" : "1rem",
@@ -260,15 +300,25 @@ const HealthCountdown = () => {
             {/* Lab Test Countdown Card */}
             <div
               style={{
-                background: "linear-gradient(135deg, rgba(245,87,108,0.15) 0%, rgba(245,87,108,0.05) 100%)",
+                background:
+                  "linear-gradient(135deg, rgba(245,87,108,0.15) 0%, rgba(245,87,108,0.05) 100%)",
                 borderRadius: isMobile ? "12px" : "16px",
                 padding: isMobile ? "14px" : "20px",
                 marginBottom: "12px",
                 border: "1px solid rgba(245,87,108,0.3)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>🩺</span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "12px",
+                }}
+              >
+                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
+                  🩺
+                </span>
                 <div>
                   <div
                     style={{
@@ -280,7 +330,13 @@ const HealthCountdown = () => {
                   >
                     Lab Test
                   </div>
-                  <div style={{ fontSize: isMobile ? "0.8rem" : "0.9rem", color: "#f5576c", fontWeight: "600" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
+                      color: "#f5576c",
+                      fontWeight: "600",
+                    }}
+                  >
                     April 15, 2026
                   </div>
                 </div>
@@ -295,25 +351,42 @@ const HealthCountdown = () => {
                   fontFamily: "monospace",
                 }}
               >
-                {timeLeft.labDays}d {timeLeft.labHours}h {timeLeft.labMinutes}m {timeLeft.labSeconds}s
+                {isClient
+                  ? `${timeLeft.labDays}d ${timeLeft.labHours}h ${timeLeft.labMinutes}m ${timeLeft.labSeconds}s`
+                  : "Loading..."}
               </div>
               <div style={styles.progressBar as React.CSSProperties}>
-                <div style={progressFillStyle(100 - (timeLeft.labDays / 82) * 100, "#f5576c")} />
+                <div
+                  style={progressFillStyle(
+                    100 - (timeLeft.labDays / 82) * 100,
+                    "#f5576c"
+                  )}
+                />
               </div>
             </div>
 
             {/* 6-Pack Countdown Card */}
             <div
               style={{
-                background: "linear-gradient(135deg, rgba(79,172,254,0.15) 0%, rgba(79,172,254,0.05) 100%)",
+                background:
+                  "linear-gradient(135deg, rgba(79,172,254,0.15) 0%, rgba(79,172,254,0.05) 100%)",
                 borderRadius: isMobile ? "12px" : "16px",
                 padding: isMobile ? "14px" : "20px",
                 marginBottom: "12px",
                 border: "1px solid rgba(79,172,254,0.3)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>💪</span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "12px",
+                }}
+              >
+                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
+                  💪
+                </span>
                 <div>
                   <div
                     style={{
@@ -325,7 +398,13 @@ const HealthCountdown = () => {
                   >
                     6-Pack Goal
                   </div>
-                  <div style={{ fontSize: isMobile ? "0.8rem" : "0.9rem", color: "#4facfe", fontWeight: "600" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
+                      color: "#4facfe",
+                      fontWeight: "600",
+                    }}
+                  >
                     August 31, 2026
                   </div>
                 </div>
@@ -340,25 +419,42 @@ const HealthCountdown = () => {
                   fontFamily: "monospace",
                 }}
               >
-                {timeLeft.sixPackDays}d {timeLeft.sixPackHours}h {timeLeft.sixPackMinutes}m {timeLeft.sixPackSeconds}s
+                {isClient
+                  ? `${timeLeft.sixPackDays}d ${timeLeft.sixPackHours}h ${timeLeft.sixPackMinutes}m ${timeLeft.sixPackSeconds}s`
+                  : "Loading..."}
               </div>
               <div style={styles.progressBar as React.CSSProperties}>
-                <div style={progressFillStyle(100 - (timeLeft.sixPackDays / 220) * 100, "#4facfe")} />
+                <div
+                  style={progressFillStyle(
+                    100 - (timeLeft.sixPackDays / 220) * 100,
+                    "#4facfe"
+                  )}
+                />
               </div>
             </div>
 
             {/* Metformin Freedom Countdown Card */}
             <div
               style={{
-                background: "linear-gradient(135deg, rgba(0,212,170,0.15) 0%, rgba(0,212,170,0.05) 100%)",
+                background:
+                  "linear-gradient(135deg, rgba(0,212,170,0.15) 0%, rgba(0,212,170,0.05) 100%)",
                 borderRadius: isMobile ? "12px" : "16px",
                 padding: isMobile ? "14px" : "20px",
                 marginBottom: "12px",
                 border: "1px solid rgba(0,212,170,0.3)",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>🏆</span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "12px",
+                }}
+              >
+                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
+                  🏆
+                </span>
                 <div>
                   <div
                     style={{
@@ -370,7 +466,13 @@ const HealthCountdown = () => {
                   >
                     Metformin Freedom
                   </div>
-                  <div style={{ fontSize: isMobile ? "0.8rem" : "0.9rem", color: "#00d4aa", fontWeight: "600" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
+                      color: "#00d4aa",
+                      fontWeight: "600",
+                    }}
+                  >
                     January 23, 2027
                   </div>
                 </div>
@@ -385,28 +487,72 @@ const HealthCountdown = () => {
                   fontFamily: "monospace",
                 }}
               >
-                {timeLeft.remissionDays}d {timeLeft.remissionHours}h {timeLeft.remissionMinutes}m {timeLeft.remissionSeconds}s
+                {isClient
+                  ? `${timeLeft.remissionDays}d ${timeLeft.remissionHours}h ${timeLeft.remissionMinutes}m ${timeLeft.remissionSeconds}s`
+                  : "Loading..."}
               </div>
               <div style={styles.progressBar as React.CSSProperties}>
-                <div style={progressFillStyle(100 - (timeLeft.remissionDays / 365) * 100, "#00d4aa")} />
+                <div
+                  style={progressFillStyle(
+                    100 - (timeLeft.remissionDays / 365) * 100,
+                    "#00d4aa"
+                  )}
+                />
               </div>
             </div>
           </div>
 
           {/* Journey Progress */}
           <div style={styles.card as React.CSSProperties}>
-            <h3 style={{ margin: "0 0 12px", fontSize: isMobile ? "0.85rem" : "0.9rem", color: "#00d4aa" }}>
+            <h3
+              style={{
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.85rem" : "0.9rem",
+                color: "#00d4aa",
+              }}
+            >
               🚀 JOURNEY PROGRESS
             </h3>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-              <span style={{ color: "#888", fontSize: isMobile ? "0.7rem" : "0.8rem" }}>Jan 23</span>
-              <span style={{ color: "#00d4aa", fontWeight: "700", fontSize: isMobile ? "0.8rem" : "0.9rem" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "8px",
+              }}
+            >
+              <span
+                style={{
+                  color: "#888",
+                  fontSize: isMobile ? "0.7rem" : "0.8rem",
+                }}
+              >
+                Jan 23
+              </span>
+              <span
+                style={{
+                  color: "#00d4aa",
+                  fontWeight: "700",
+                  fontSize: isMobile ? "0.8rem" : "0.9rem",
+                }}
+              >
                 {progress.toFixed(1)}% Complete
               </span>
-              <span style={{ color: "#888", fontSize: isMobile ? "0.7rem" : "0.8rem" }}>Apr 15</span>
+              <span
+                style={{
+                  color: "#888",
+                  fontSize: isMobile ? "0.7rem" : "0.8rem",
+                }}
+              >
+                Apr 15
+              </span>
             </div>
             <div style={styles.progressBar as React.CSSProperties}>
-              <div style={progressFillStyle(progress, "linear-gradient(90deg, #00d4aa, #4facfe)")} />
+              <div
+                style={progressFillStyle(
+                  progress,
+                  "linear-gradient(90deg, #00d4aa, #4facfe)"
+                )}
+              />
             </div>
           </div>
         </>
@@ -416,7 +562,13 @@ const HealthCountdown = () => {
       {activeTab === "stats" && (
         <>
           <div style={styles.card as React.CSSProperties}>
-            <h3 style={{ margin: "0 0 12px", fontSize: isMobile ? "0.85rem" : "0.9rem", color: "#00d4aa" }}>
+            <h3
+              style={{
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.85rem" : "0.9rem",
+                color: "#00d4aa",
+              }}
+            >
               📈 PROJECTED HEALTH STATS
             </h3>
             <div
@@ -427,56 +579,162 @@ const HealthCountdown = () => {
               }}
             >
               <div style={statBoxStyle("#00d4aa")}>
-                <div style={{ fontSize: isMobile ? "1.3rem" : "1.5rem", fontWeight: "800", color: "#00d4aa" }}>
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#00d4aa",
+                  }}
+                >
                   {stats.weight} lbs
                 </div>
-                <div style={{ fontSize: isMobile ? "0.65rem" : "0.7rem", color: "#888" }}>CURRENT WEIGHT</div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  CURRENT WEIGHT
+                </div>
               </div>
               <div style={statBoxStyle("#f5576c")}>
-                <div style={{ fontSize: isMobile ? "1.3rem" : "1.5rem", fontWeight: "800", color: "#f5576c" }}>
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#f5576c",
+                  }}
+                >
                   {stats.weightLost} lbs
                 </div>
-                <div style={{ fontSize: isMobile ? "0.65rem" : "0.7rem", color: "#888" }}>TOTAL LOST</div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  TOTAL LOST
+                </div>
               </div>
               <div style={statBoxStyle("#4facfe")}>
-                <div style={{ fontSize: isMobile ? "1.3rem" : "1.5rem", fontWeight: "800", color: "#4facfe" }}>
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#4facfe",
+                  }}
+                >
                   {stats.a1c}%
                 </div>
-                <div style={{ fontSize: isMobile ? "0.65rem" : "0.7rem", color: "#888" }}>PROJECTED A1C</div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  PROJECTED A1C
+                </div>
               </div>
               <div style={statBoxStyle("#fbbf24")}>
-                <div style={{ fontSize: isMobile ? "1.3rem" : "1.5rem", fontWeight: "800", color: "#fbbf24" }}>
+                <div
+                  style={{
+                    fontSize: isMobile ? "1.3rem" : "1.5rem",
+                    fontWeight: "800",
+                    color: "#fbbf24",
+                  }}
+                >
                   {stats.glucose}
                 </div>
-                <div style={{ fontSize: isMobile ? "0.65rem" : "0.7rem", color: "#888" }}>FASTING GLUCOSE</div>
+                <div
+                  style={{
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
+                    color: "#888",
+                  }}
+                >
+                  FASTING GLUCOSE
+                </div>
               </div>
             </div>
           </div>
 
           <div style={styles.card as React.CSSProperties}>
-            <h3 style={{ margin: "0 0 12px", fontSize: isMobile ? "0.85rem" : "0.9rem", color: "#00d4aa" }}>
+            <h3
+              style={{
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.85rem" : "0.9rem",
+                color: "#00d4aa",
+              }}
+            >
               📅 DAILY STATS
             </h3>
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+                gridTemplateColumns: isMobile
+                  ? "repeat(2, 1fr)"
+                  : "repeat(3, 1fr)",
                 gap: isMobile ? "10px" : "12px",
               }}
             >
               {[
-                { label: "Days In", value: daysElapsed + 1, emoji: "📅", color: "#f093fb" },
-                { label: "Days Left", value: timeLeft.labDays || 0, emoji: "⏳", color: "#4facfe" },
-                { label: "Hours Fasted", value: ((daysElapsed + 1) * 18).toLocaleString(), emoji: "🕐", color: "#fbbf24" },
-                { label: "Carbs Avoided", value: `${((daysElapsed + 1) * 250).toLocaleString()}g`, emoji: "🚫", color: "#f5576c" },
-                { label: "Fat Burned", value: `${(parseFloat(stats.weightLost) * 0.7).toFixed(1)} lbs`, emoji: "🔥", color: "#00d4aa" },
+                {
+                  label: "Days In",
+                  value: daysElapsed + 1,
+                  emoji: "📅",
+                  color: "#f093fb",
+                },
+                {
+                  label: "Days Left",
+                  value: timeLeft.labDays || 0,
+                  emoji: "⏳",
+                  color: "#4facfe",
+                },
+                {
+                  label: "Hours Fasted",
+                  value: ((daysElapsed + 1) * 18).toLocaleString(),
+                  emoji: "🕐",
+                  color: "#fbbf24",
+                },
+                {
+                  label: "Carbs Avoided",
+                  value: `${((daysElapsed + 1) * 250).toLocaleString()}g`,
+                  emoji: "🚫",
+                  color: "#f5576c",
+                },
+                {
+                  label: "Fat Burned",
+                  value: `${(parseFloat(stats.weightLost) * 0.7).toFixed(
+                    1
+                  )} lbs`,
+                  emoji: "🔥",
+                  color: "#00d4aa",
+                },
               ].map((stat, i) => (
                 <div key={i} style={{ textAlign: "center", padding: "10px" }}>
-                  <div style={{ fontSize: isMobile ? "1.2rem" : "1.5rem", marginBottom: "4px" }}>{stat.emoji}</div>
-                  <div style={{ fontSize: isMobile ? "1rem" : "1.2rem", fontWeight: "800", color: stat.color }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "1.2rem" : "1.5rem",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {stat.emoji}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "1rem" : "1.2rem",
+                      fontWeight: "800",
+                      color: stat.color,
+                    }}
+                  >
                     {stat.value}
                   </div>
-                  <div style={{ fontSize: isMobile ? "0.6rem" : "0.7rem", color: "#888", textTransform: "uppercase" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.6rem" : "0.7rem",
+                      color: "#888",
+                      textTransform: "uppercase",
+                    }}
+                  >
                     {stat.label}
                   </div>
                 </div>
@@ -486,14 +744,37 @@ const HealthCountdown = () => {
 
           {/* April 15 Projections */}
           <div style={styles.card as React.CSSProperties}>
-            <h3 style={{ margin: "0 0 12px", fontSize: isMobile ? "0.85rem" : "0.9rem", color: "#00d4aa" }}>
+            <h3
+              style={{
+                margin: "0 0 12px",
+                fontSize: isMobile ? "0.85rem" : "0.9rem",
+                color: "#00d4aa",
+              }}
+            >
               🩺 APRIL 15 LAB PROJECTIONS
             </h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
               {[
-                { test: "A1C", before: "11.5%", after: "7.0-8.0%", color: "#f5576c" },
-                { test: "Fasting Glucose", before: "184", after: "95-115", color: "#4facfe" },
-                { test: "Weight", before: "210 lbs", after: "175-185 lbs", color: "#00d4aa" },
+                {
+                  test: "A1C",
+                  before: "11.5%",
+                  after: "7.0-8.0%",
+                  color: "#f5576c",
+                },
+                {
+                  test: "Fasting Glucose",
+                  before: "184",
+                  after: "95-115",
+                  color: "#4facfe",
+                },
+                {
+                  test: "Weight",
+                  before: "210 lbs",
+                  after: "175-185 lbs",
+                  color: "#00d4aa",
+                },
               ].map((item, i) => (
                 <div
                   key={i}
@@ -506,13 +787,38 @@ const HealthCountdown = () => {
                     borderRadius: "10px",
                   }}
                 >
-                  <span style={{ fontWeight: "600", fontSize: isMobile ? "0.8rem" : "0.9rem" }}>{item.test}</span>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <span style={{ color: "#888", textDecoration: "line-through", fontSize: isMobile ? "0.75rem" : "0.85rem" }}>
+                  <span
+                    style={{
+                      fontWeight: "600",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
+                    }}
+                  >
+                    {item.test}
+                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#888",
+                        textDecoration: "line-through",
+                        fontSize: isMobile ? "0.75rem" : "0.85rem",
+                      }}
+                    >
                       {item.before}
                     </span>
                     <span style={{ color: "#888" }}>→</span>
-                    <span style={{ color: item.color, fontWeight: "700", fontSize: isMobile ? "0.85rem" : "0.95rem" }}>
+                    <span
+                      style={{
+                        color: item.color,
+                        fontWeight: "700",
+                        fontSize: isMobile ? "0.85rem" : "0.95rem",
+                      }}
+                    >
                       {item.after}
                     </span>
                   </div>
@@ -526,13 +832,21 @@ const HealthCountdown = () => {
       {/* ACHIEVEMENTS TAB */}
       {activeTab === "achievements" && (
         <div style={styles.card as React.CSSProperties}>
-          <h3 style={{ margin: "0 0 12px", fontSize: isMobile ? "0.85rem" : "0.9rem", color: "#00d4aa" }}>
+          <h3
+            style={{
+              margin: "0 0 12px",
+              fontSize: isMobile ? "0.85rem" : "0.9rem",
+              color: "#00d4aa",
+            }}
+          >
             🏅 ACHIEVEMENTS ({unlockedCount}/{achievements.length})
           </h3>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+              gridTemplateColumns: isMobile
+                ? "repeat(2, 1fr)"
+                : "repeat(3, 1fr)",
               gap: isMobile ? "8px" : "10px",
             }}
           >
@@ -542,11 +856,15 @@ const HealthCountdown = () => {
                 <div
                   key={a.id}
                   style={{
-                    background: unlocked ? "rgba(0,212,170,0.1)" : "rgba(255,255,255,0.02)",
+                    background: unlocked
+                      ? "rgba(0,212,170,0.1)"
+                      : "rgba(255,255,255,0.02)",
                     borderRadius: isMobile ? "10px" : "12px",
                     padding: isMobile ? "10px" : "14px",
                     textAlign: "center",
-                    border: unlocked ? "1px solid rgba(0,212,170,0.3)" : "1px solid rgba(255,255,255,0.05)",
+                    border: unlocked
+                      ? "1px solid rgba(0,212,170,0.3)"
+                      : "1px solid rgba(255,255,255,0.05)",
                     opacity: unlocked ? 1 : 0.5,
                   }}
                 >
@@ -569,7 +887,12 @@ const HealthCountdown = () => {
                   >
                     {a.name}
                   </div>
-                  <div style={{ fontSize: isMobile ? "0.6rem" : "0.65rem", color: unlocked ? "#00d4aa" : "#555" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.6rem" : "0.65rem",
+                      color: unlocked ? "#00d4aa" : "#555",
+                    }}
+                  >
                     {unlocked ? "✓ Unlocked!" : `Day ${a.day}`}
                   </div>
                 </div>
@@ -590,7 +913,14 @@ const HealthCountdown = () => {
           border: "1px solid rgba(255,255,255,0.08)",
         }}
       >
-        <div style={{ fontSize: isMobile ? "1.5rem" : "2rem", marginBottom: "8px" }}>🦁</div>
+        <div
+          style={{
+            fontSize: isMobile ? "1.5rem" : "2rem",
+            marginBottom: "8px",
+          }}
+        >
+          🦁
+        </div>
         <p
           style={{
             fontSize: isMobile ? "0.85rem" : "1rem",
@@ -603,8 +933,15 @@ const HealthCountdown = () => {
         >
           ZERO CARBS • ZERO SUGAR • ZERO LIMITS
         </p>
-        <p style={{ color: "#888", fontSize: isMobile ? "0.75rem" : "0.85rem", margin: 0 }}>
-          You&apos;re on a <span style={{ color: "#00d4aa", fontWeight: "700" }}>MISSION</span>.
+        <p
+          style={{
+            color: "#888",
+            fontSize: isMobile ? "0.75rem" : "0.85rem",
+            margin: 0,
+          }}
+        >
+          You&apos;re on a{" "}
+          <span style={{ color: "#00d4aa", fontWeight: "700" }}>MISSION</span>.
         </p>
       </div>
     </div>
