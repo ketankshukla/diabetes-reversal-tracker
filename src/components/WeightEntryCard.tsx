@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SaturdayWeek } from "@/types";
 import { Check, Edit2, X, Save, Lock } from "lucide-react";
 import { isTodaySaturday } from "@/lib/calculations";
@@ -37,9 +37,14 @@ export default function WeightEntryCard({
   );
   const [notes, setNotes] = useState(week.entry?.notes || "");
   const [isSaving, setIsSaving] = useState(false);
+  const [isSaturday, setIsSaturday] = useState(false);
+
+  // Check if today is Saturday only on client side to avoid hydration mismatch
+  useEffect(() => {
+    setIsSaturday(isTodaySaturday());
+  }, []);
 
   const hasEntry = week.entry !== null;
-  const isSaturday = isTodaySaturday();
   const canEnterData = isSaturday && (week.isPast || week.isCurrentWeek);
   const weightChange =
     hasEntry && previousWeight ? week.entry!.weight_lbs - previousWeight : null;
