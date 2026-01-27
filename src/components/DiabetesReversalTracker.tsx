@@ -657,6 +657,16 @@ const DiabetesReversalTracker = ({
   const todayDayOfWeek = today.getDay();
   const todayExercises = getExercisesForDay(todayDayOfWeek);
 
+  // Detect mobile screen
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   // Styles
   const styles: any = {
     container: {
@@ -664,15 +674,19 @@ const DiabetesReversalTracker = ({
       background:
         "linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%)",
       minHeight: "100vh",
-      padding: "15px",
+      padding: isMobile ? "10px" : "15px",
       color: "#fff",
+      maxWidth: "100vw",
+      overflowX: "hidden" as const,
+      boxSizing: "border-box" as const,
     },
     card: {
       background: "rgba(255,255,255,0.03)",
-      borderRadius: "16px",
-      padding: "16px",
+      borderRadius: isMobile ? "12px" : "16px",
+      padding: isMobile ? "12px" : "16px",
       marginBottom: "12px",
       border: "1px solid rgba(255,255,255,0.08)",
+      overflowX: "hidden" as const,
     },
     tabs: {
       display: "flex",
@@ -680,13 +694,16 @@ const DiabetesReversalTracker = ({
       marginBottom: "16px",
       overflowX: "auto" as const,
       paddingBottom: "8px",
+      WebkitOverflowScrolling: "touch" as const,
+      msOverflowStyle: "none" as const,
+      scrollbarWidth: "none" as const,
     },
     tab: (active: boolean) => ({
-      padding: "10px 14px",
+      padding: isMobile ? "10px 12px" : "10px 14px",
       borderRadius: "20px",
       border: "none",
       cursor: "pointer",
-      fontSize: "0.8rem",
+      fontSize: isMobile ? "0.75rem" : "0.8rem",
       fontWeight: "600",
       background: active
         ? "linear-gradient(135deg, #00d4aa, #00a080)"
@@ -694,24 +711,27 @@ const DiabetesReversalTracker = ({
       color: active ? "#000" : "#888",
       whiteSpace: "nowrap" as const,
       transition: "all 0.2s",
+      flexShrink: 0,
     }),
     table: {
       width: "100%",
       borderCollapse: "collapse" as const,
-      fontSize: "0.85rem",
+      fontSize: isMobile ? "0.75rem" : "0.85rem",
+      tableLayout: "fixed" as const,
     },
     th: {
       textAlign: "left" as const,
-      padding: "10px 8px",
+      padding: isMobile ? "8px 4px" : "10px 8px",
       borderBottom: "1px solid rgba(255,255,255,0.1)",
       color: "#888",
       fontWeight: "600",
-      fontSize: "0.75rem",
+      fontSize: isMobile ? "0.65rem" : "0.75rem",
       textTransform: "uppercase" as const,
     },
     td: {
-      padding: "10px 8px",
+      padding: isMobile ? "8px 4px" : "10px 8px",
       borderBottom: "1px solid rgba(255,255,255,0.05)",
+      wordBreak: "break-word" as const,
     },
     input: {
       background: "rgba(255,255,255,0.1)",
@@ -846,8 +866,8 @@ const DiabetesReversalTracker = ({
               style={{
                 background:
                   "linear-gradient(135deg, rgba(245,87,108,0.15) 0%, rgba(245,87,108,0.05) 100%)",
-                borderRadius: "16px",
-                padding: "20px",
+                borderRadius: isMobile ? "12px" : "16px",
+                padding: isMobile ? "14px" : "20px",
                 marginBottom: "12px",
                 border: "1px solid rgba(245,87,108,0.3)",
               }}
@@ -860,11 +880,13 @@ const DiabetesReversalTracker = ({
                   marginBottom: "12px",
                 }}
               >
-                <span style={{ fontSize: "1.5rem" }}>🩺</span>
+                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
+                  🩺
+                </span>
                 <div>
                   <div
                     style={{
-                      fontSize: "0.75rem",
+                      fontSize: isMobile ? "0.65rem" : "0.75rem",
                       color: "#888",
                       textTransform: "uppercase",
                       letterSpacing: "0.05em",
@@ -874,7 +896,7 @@ const DiabetesReversalTracker = ({
                   </div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
                       color: "#f5576c",
                       fontWeight: "600",
                     }}
@@ -885,7 +907,7 @@ const DiabetesReversalTracker = ({
               </div>
               <div
                 style={{
-                  fontSize: "2.5rem",
+                  fontSize: isMobile ? "1.5rem" : "2.5rem",
                   fontWeight: "800",
                   color: "#f5576c",
                   textAlign: "center",
@@ -920,8 +942,8 @@ const DiabetesReversalTracker = ({
               style={{
                 background:
                   "linear-gradient(135deg, rgba(79,172,254,0.15) 0%, rgba(79,172,254,0.05) 100%)",
-                borderRadius: "16px",
-                padding: "20px",
+                borderRadius: isMobile ? "12px" : "16px",
+                padding: isMobile ? "14px" : "20px",
                 marginBottom: "12px",
                 border: "1px solid rgba(79,172,254,0.3)",
               }}
@@ -934,11 +956,13 @@ const DiabetesReversalTracker = ({
                   marginBottom: "12px",
                 }}
               >
-                <span style={{ fontSize: "1.5rem" }}>💪</span>
+                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
+                  💪
+                </span>
                 <div>
                   <div
                     style={{
-                      fontSize: "0.75rem",
+                      fontSize: isMobile ? "0.65rem" : "0.75rem",
                       color: "#888",
                       textTransform: "uppercase",
                       letterSpacing: "0.05em",
@@ -948,7 +972,7 @@ const DiabetesReversalTracker = ({
                   </div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
                       color: "#4facfe",
                       fontWeight: "600",
                     }}
@@ -959,7 +983,7 @@ const DiabetesReversalTracker = ({
               </div>
               <div
                 style={{
-                  fontSize: "2.5rem",
+                  fontSize: isMobile ? "1.5rem" : "2.5rem",
                   fontWeight: "800",
                   color: "#4facfe",
                   textAlign: "center",
@@ -994,8 +1018,8 @@ const DiabetesReversalTracker = ({
               style={{
                 background:
                   "linear-gradient(135deg, rgba(0,212,170,0.15) 0%, rgba(0,212,170,0.05) 100%)",
-                borderRadius: "16px",
-                padding: "20px",
+                borderRadius: isMobile ? "12px" : "16px",
+                padding: isMobile ? "14px" : "20px",
                 marginBottom: "12px",
                 border: "1px solid rgba(0,212,170,0.3)",
               }}
@@ -1008,11 +1032,13 @@ const DiabetesReversalTracker = ({
                   marginBottom: "12px",
                 }}
               >
-                <span style={{ fontSize: "1.5rem" }}>🏆</span>
+                <span style={{ fontSize: isMobile ? "1.2rem" : "1.5rem" }}>
+                  🏆
+                </span>
                 <div>
                   <div
                     style={{
-                      fontSize: "0.75rem",
+                      fontSize: isMobile ? "0.65rem" : "0.75rem",
                       color: "#888",
                       textTransform: "uppercase",
                       letterSpacing: "0.05em",
@@ -1022,7 +1048,7 @@ const DiabetesReversalTracker = ({
                   </div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
                       color: "#00d4aa",
                       fontWeight: "600",
                     }}
@@ -1033,7 +1059,7 @@ const DiabetesReversalTracker = ({
               </div>
               <div
                 style={{
-                  fontSize: "2.5rem",
+                  fontSize: isMobile ? "1.5rem" : "2.5rem",
                   fontWeight: "800",
                   color: "#00d4aa",
                   textAlign: "center",
@@ -1069,7 +1095,7 @@ const DiabetesReversalTracker = ({
             <h3
               style={{
                 margin: "0 0 16px",
-                fontSize: "1rem",
+                fontSize: isMobile ? "0.9rem" : "1rem",
                 color: "#00d4aa",
                 fontWeight: "700",
               }}
@@ -1078,7 +1104,7 @@ const DiabetesReversalTracker = ({
             </h3>
             <p
               style={{
-                fontSize: "0.8rem",
+                fontSize: isMobile ? "0.7rem" : "0.8rem",
                 color: "#666",
                 marginBottom: "16px",
                 lineHeight: "1.4",
@@ -1092,22 +1118,22 @@ const DiabetesReversalTracker = ({
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(2, 1fr)",
-                gap: "12px",
+                gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
+                gap: isMobile ? "10px" : "12px",
                 marginBottom: "16px",
               }}
             >
               <div
                 style={{
                   background: "rgba(0,212,170,0.1)",
-                  borderRadius: "12px",
-                  padding: "16px",
+                  borderRadius: isMobile ? "10px" : "12px",
+                  padding: isMobile ? "12px" : "16px",
                   border: "1px solid rgba(0,212,170,0.2)",
                 }}
               >
                 <div
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
                     color: "#888",
                     textTransform: "uppercase",
                     letterSpacing: "0.05em",
@@ -1118,19 +1144,24 @@ const DiabetesReversalTracker = ({
                 </div>
                 <div
                   style={{
-                    fontSize: "2rem",
+                    fontSize: isMobile ? "1.5rem" : "2rem",
                     fontWeight: "800",
                     color: "#00d4aa",
                   }}
                 >
                   {currentWeight}{" "}
-                  <span style={{ fontSize: "0.9rem", fontWeight: "400" }}>
+                  <span
+                    style={{
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
+                      fontWeight: "400",
+                    }}
+                  >
                     lbs
                   </span>
                 </div>
                 <div
                   style={{
-                    fontSize: "0.75rem",
+                    fontSize: isMobile ? "0.65rem" : "0.75rem",
                     color: "#666",
                     marginTop: "4px",
                   }}
@@ -1142,14 +1173,14 @@ const DiabetesReversalTracker = ({
               <div
                 style={{
                   background: "rgba(245,87,108,0.1)",
-                  borderRadius: "12px",
-                  padding: "16px",
+                  borderRadius: isMobile ? "10px" : "12px",
+                  padding: isMobile ? "12px" : "16px",
                   border: "1px solid rgba(245,87,108,0.2)",
                 }}
               >
                 <div
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: isMobile ? "0.65rem" : "0.7rem",
                     color: "#888",
                     textTransform: "uppercase",
                     letterSpacing: "0.05em",
@@ -1160,19 +1191,24 @@ const DiabetesReversalTracker = ({
                 </div>
                 <div
                   style={{
-                    fontSize: "2rem",
+                    fontSize: isMobile ? "1.5rem" : "2rem",
                     fontWeight: "800",
                     color: "#f5576c",
                   }}
                 >
                   {totalWeightLost}{" "}
-                  <span style={{ fontSize: "0.9rem", fontWeight: "400" }}>
+                  <span
+                    style={{
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
+                      fontWeight: "400",
+                    }}
+                  >
                     lbs
                   </span>
                 </div>
                 <div
                   style={{
-                    fontSize: "0.75rem",
+                    fontSize: isMobile ? "0.65rem" : "0.75rem",
                     color: "#666",
                     marginTop: "4px",
                   }}
@@ -1186,14 +1222,14 @@ const DiabetesReversalTracker = ({
             <div
               style={{
                 background: "rgba(255,255,255,0.03)",
-                borderRadius: "12px",
-                padding: "16px",
+                borderRadius: isMobile ? "10px" : "12px",
+                padding: isMobile ? "12px" : "16px",
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
             >
               <div
                 style={{
-                  fontSize: "0.75rem",
+                  fontSize: isMobile ? "0.65rem" : "0.75rem",
                   color: "#888",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
@@ -1207,8 +1243,10 @@ const DiabetesReversalTracker = ({
               <div
                 style={{
                   display: "flex",
+                  flexDirection: isMobile ? "column" : "row",
                   justifyContent: "space-between",
-                  alignItems: "center",
+                  alignItems: isMobile ? "flex-start" : "center",
+                  gap: isMobile ? "8px" : "0",
                   marginBottom: "12px",
                   paddingBottom: "12px",
                   borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -1217,7 +1255,7 @@ const DiabetesReversalTracker = ({
                 <div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
                       color: "#fff",
                       fontWeight: "600",
                     }}
@@ -1256,8 +1294,10 @@ const DiabetesReversalTracker = ({
               <div
                 style={{
                   display: "flex",
+                  flexDirection: isMobile ? "column" : "row",
                   justifyContent: "space-between",
-                  alignItems: "center",
+                  alignItems: isMobile ? "flex-start" : "center",
+                  gap: isMobile ? "8px" : "0",
                   marginBottom: "12px",
                   paddingBottom: "12px",
                   borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -1266,28 +1306,38 @@ const DiabetesReversalTracker = ({
                 <div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
                       color: "#fff",
                       fontWeight: "600",
                     }}
                   >
                     Estimated Body Fat
                   </div>
-                  <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.65rem" : "0.7rem",
+                      color: "#666",
+                    }}
+                  >
                     Based on ~150 lbs lean mass
                   </div>
                 </div>
-                <div style={{ textAlign: "right" }}>
+                <div style={{ textAlign: isMobile ? "left" : "right" }}>
                   <div
                     style={{
-                      fontSize: "1.5rem",
+                      fontSize: isMobile ? "1.2rem" : "1.5rem",
                       fontWeight: "800",
                       color: "#fbbf24",
                     }}
                   >
                     {estimatedBodyFat}%
                   </div>
-                  <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.65rem" : "0.7rem",
+                      color: "#666",
+                    }}
+                  >
                     {parseFloat(estimatedBodyFat) <= 15
                       ? "Athletic range"
                       : parseFloat(estimatedBodyFat) <= 20
@@ -1301,28 +1351,35 @@ const DiabetesReversalTracker = ({
               <div
                 style={{
                   display: "flex",
+                  flexDirection: isMobile ? "column" : "row",
                   justifyContent: "space-between",
-                  alignItems: "center",
+                  alignItems: isMobile ? "flex-start" : "center",
+                  gap: isMobile ? "8px" : "0",
                 }}
               >
                 <div>
                   <div
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: isMobile ? "0.8rem" : "0.9rem",
                       color: "#fff",
                       fontWeight: "600",
                     }}
                   >
                     Projected Fasting Glucose
                   </div>
-                  <div style={{ fontSize: "0.7rem", color: "#666" }}>
+                  <div
+                    style={{
+                      fontSize: isMobile ? "0.65rem" : "0.7rem",
+                      color: "#666",
+                    }}
+                  >
                     Started at 184 mg/dL • Goal: under 100
                   </div>
                 </div>
-                <div style={{ textAlign: "right" }}>
+                <div style={{ textAlign: isMobile ? "left" : "right" }}>
                   <div
                     style={{
-                      fontSize: "1.5rem",
+                      fontSize: isMobile ? "1.2rem" : "1.5rem",
                       fontWeight: "800",
                       color: "#00d4aa",
                     }}
@@ -1331,7 +1388,7 @@ const DiabetesReversalTracker = ({
                   </div>
                   <div
                     style={{
-                      fontSize: "0.7rem",
+                      fontSize: isMobile ? "0.65rem" : "0.7rem",
                       color: projectedGlucose <= 100 ? "#00d4aa" : "#fbbf24",
                     }}
                   >
@@ -1345,7 +1402,7 @@ const DiabetesReversalTracker = ({
 
             <p
               style={{
-                fontSize: "0.7rem",
+                fontSize: isMobile ? "0.65rem" : "0.7rem",
                 color: "#555",
                 marginTop: "12px",
                 fontStyle: "italic",
