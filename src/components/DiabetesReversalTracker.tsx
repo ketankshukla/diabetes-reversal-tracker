@@ -111,8 +111,6 @@ const DiabetesReversalTracker = ({
     { id: 12, name: "Victory Lap", icon: "🎉", day: 82 },
   ];
 
-  const unlockedCount = achievements.filter((a) => daysElapsed >= a.day).length;
-
   const toggleExercise = (exerciseName: string) => {
     setExpandedExercises((prev) => {
       const newSet = new Set(prev);
@@ -242,6 +240,7 @@ const DiabetesReversalTracker = ({
   const daysElapsed = timeLeft.daysElapsed || 1;
   const weeksElapsed = Math.max(1, Math.floor(daysElapsed / 7));
   const avgWeeklyLoss = totalWeightLost / weeksElapsed;
+  const unlockedCount = achievements.filter((a) => daysElapsed >= a.day).length;
 
   // Goals
   const sixPackWeight = 170;
