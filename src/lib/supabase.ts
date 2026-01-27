@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -7,12 +7,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function getWeightEntries() {
   const { data, error } = await supabase
-    .from('weekly_measurements')
-    .select('*')
-    .order('measurement_date', { ascending: true });
+    .from("weekly_measurements")
+    .select("*")
+    .order("measurement_date", { ascending: true });
 
   if (error) {
-    console.error('Error fetching weight entries:', error);
+    console.error("Error fetching weight entries:", error);
     return [];
   }
 
@@ -21,18 +21,19 @@ export async function getWeightEntries() {
 
 export async function getLatestWeightEntry() {
   const { data, error } = await supabase
-    .from('weekly_measurements')
-    .select('*')
-    .order('measurement_date', { ascending: false })
-    .limit(1)
-    .single();
+    .from("weekly_measurements")
+    .select("*")
+    .order("measurement_date", { ascending: false })
+    .limit(1);
 
-  if (error) {
-    console.error('Error fetching latest weight entry:', error);
+  // PGRST116 = no rows returned, which is expected when table is empty
+  if (error && error.code !== "PGRST116") {
+    console.error("Error fetching latest weight entry:", error);
     return null;
   }
 
-  return data;
+  // Return first item or null if empty
+  return data && data.length > 0 ? data[0] : null;
 }
 
 export async function upsertWeightEntry(entry: {
@@ -42,13 +43,13 @@ export async function upsertWeightEntry(entry: {
   notes?: string | null;
 }) {
   const { data, error } = await supabase
-    .from('weekly_measurements')
-    .upsert(entry, { onConflict: 'measurement_date' })
+    .from("weekly_measurements")
+    .upsert(entry, { onConflict: "measurement_date" })
     .select()
     .single();
 
   if (error) {
-    console.error('Error upserting weight entry:', error);
+    console.error("Error upserting weight entry:", error);
     throw error;
   }
 
@@ -57,13 +58,13 @@ export async function upsertWeightEntry(entry: {
 
 export async function getWeightEntryByDate(date: string) {
   const { data, error } = await supabase
-    .from('weekly_measurements')
-    .select('*')
-    .eq('measurement_date', date)
+    .from("weekly_measurements")
+    .select("*")
+    .eq("measurement_date", date)
     .single();
 
-  if (error && error.code !== 'PGRST116') {
-    console.error('Error fetching weight entry by date:', error);
+  if (error && error.code !== "PGRST116") {
+    console.error("Error fetching weight entry by date:", error);
     return null;
   }
 

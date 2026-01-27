@@ -18,9 +18,10 @@ export const STARTING_WAIST = 45.0;
 
 // Journey start: January 24, 2026 (Saturday) - when tracking begins
 // First weigh-in: January 31, 2026 (Saturday) - end of Week 1
-export const JOURNEY_START_DATE = new Date("2026-01-24");
-export const FIRST_WEIGHIN_DATE = new Date("2026-01-31"); // End of Week 1
-export const END_DATE = new Date("2027-01-24"); // 52 weeks from first weigh-in
+// Note: Using explicit year, month (0-indexed), day to avoid timezone issues
+export const JOURNEY_START_DATE = new Date(2026, 0, 24); // Jan 24, 2026
+export const FIRST_WEIGHIN_DATE = new Date(2026, 0, 31); // Jan 31, 2026 (Saturday)
+export const END_DATE = new Date(2027, 0, 24); // Jan 24, 2027
 
 // A1C projection: ~0.116% drop per pound lost
 export const A1C_PER_POUND =
