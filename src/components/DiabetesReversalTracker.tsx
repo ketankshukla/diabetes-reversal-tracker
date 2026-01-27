@@ -36,9 +36,7 @@ const DiabetesReversalTracker = ({
 
   // Daily checklist with dates
   const [dailyLogs, setDailyLogs] = useState<any>({});
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  const [selectedDate, setSelectedDate] = useState("2026-01-26"); // Default, updated on client
 
   const checklistItems = [
     {
@@ -96,6 +94,11 @@ const DiabetesReversalTracker = ({
       emoji: "🌙",
     },
   ];
+
+  // Set actual date on client side to avoid hydration mismatch
+  useEffect(() => {
+    setSelectedDate(new Date().toISOString().split("T")[0]);
+  }, []);
 
   // Timer effect
   useEffect(() => {
