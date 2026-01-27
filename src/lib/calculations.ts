@@ -80,7 +80,9 @@ export function calculateDaysElapsed(): number {
 }
 
 export function isTodaySaturday(): boolean {
-  return new Date().getDay() === 6; // 6 = Saturday
+  const now = new Date();
+  // Saturday = day 6, check if current day is Saturday (any time from 12:00am to 11:59pm)
+  return now.getDay() === 6;
 }
 
 export function generateAllSaturdays(): SaturdayWeek[] {
