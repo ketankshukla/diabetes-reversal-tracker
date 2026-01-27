@@ -11,6 +11,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Diabetes Reversal Tracker",
   description: "Track your journey to 6-pack abs and diabetes remission",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 export default function RootLayout({
