@@ -7,10 +7,16 @@ CREATE TABLE weekly_measurements (
   measurement_date DATE NOT NULL UNIQUE,  -- Always a Saturday
   weight_lbs DECIMAL(6,2) NOT NULL,       -- e.g., 210.00 (2 decimal places)
   waist_inches DECIMAL(5,2),              -- e.g., 45.00 (2 decimal places, optional)
+  systolic_mmhg DECIMAL(5,2),             -- e.g., 120.00 (blood pressure systolic, optional)
+  diastolic_mmhg DECIMAL(5,2),            -- e.g., 80.00 (blood pressure diastolic, optional)
   notes TEXT,                              -- Optional notes
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Migration for existing tables (run this if table already exists):
+-- ALTER TABLE weekly_measurements ADD COLUMN IF NOT EXISTS systolic_mmhg DECIMAL(5,2);
+-- ALTER TABLE weekly_measurements ADD COLUMN IF NOT EXISTS diastolic_mmhg DECIMAL(5,2);
 
 -- Create index for faster date queries
 CREATE INDEX idx_measurements_date ON weekly_measurements(measurement_date DESC);

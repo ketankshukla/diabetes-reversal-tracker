@@ -21,6 +21,7 @@ import {
   Trophy,
   Flame,
   Activity,
+  Heart,
 } from "lucide-react";
 
 export default function WeightLogPage() {
@@ -72,6 +73,8 @@ export default function WeightLogPage() {
     data: {
       weight_lbs: number;
       waist_inches?: number | null;
+      systolic_mmhg?: number | null;
+      diastolic_mmhg?: number | null;
       notes?: string | null;
     }
   ) => {
@@ -121,9 +124,9 @@ export default function WeightLogPage() {
               <Scale className="w-8 h-8 text-[#00d4aa]" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">Weight Log</h1>
+              <h1 className="text-3xl font-bold text-white">Health Metrics</h1>
               <p className="text-gray-400">
-                Track your weekly Saturday weigh-ins
+                Track your weekly weight, waist & blood pressure
               </p>
             </div>
           </div>
@@ -247,7 +250,7 @@ export default function WeightLogPage() {
       </div>
 
       {/* Secondary Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
           <Activity size={20} className="text-[#00d4aa] mx-auto mb-2" />
           <p className="text-2xl font-bold text-white">
@@ -265,6 +268,19 @@ export default function WeightLogPage() {
           </p>
           <p className="text-xs text-gray-500 uppercase tracking-wider">
             Avg lbs/week
+          </p>
+        </div>
+        <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
+          <Heart size={20} className="text-[#f472b6] mx-auto mb-2" />
+          <p className="text-2xl font-bold text-white">
+            {stats?.currentSystolic && stats?.currentDiastolic
+              ? `${stats.currentSystolic.toFixed(
+                  0
+                )}/${stats.currentDiastolic.toFixed(0)}`
+              : "—/—"}
+          </p>
+          <p className="text-xs text-gray-500 uppercase tracking-wider">
+            Blood Pressure
           </p>
         </div>
         <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
@@ -291,7 +307,7 @@ export default function WeightLogPage() {
       <div className="mb-4">
         <h2 className="text-lg font-semibold text-white flex items-center gap-2">
           <Calendar className="text-[#00d4aa]" size={20} />
-          Weekly Weigh-ins
+          Weekly Measurements
         </h2>
         <p className="text-sm text-gray-400 mt-1">
           January 31, 2026 – January 23, 2027 (52 Saturdays)
@@ -307,6 +323,8 @@ export default function WeightLogPage() {
           const previousWaist =
             previousWeek?.entry?.waist_inches ||
             (index === 0 ? null : STARTING_WAIST);
+          const previousSystolic = previousWeek?.entry?.systolic_mmhg || null;
+          const previousDiastolic = previousWeek?.entry?.diastolic_mmhg || null;
 
           return (
             <WeightEntryCard
@@ -314,6 +332,8 @@ export default function WeightLogPage() {
               week={week}
               previousWeight={previousWeight}
               previousWaist={previousWaist}
+              previousSystolic={previousSystolic}
+              previousDiastolic={previousDiastolic}
               onSave={(data) => handleSave(week.dateString, data)}
             />
           );

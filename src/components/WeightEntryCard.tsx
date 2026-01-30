@@ -9,9 +9,13 @@ interface WeightEntryCardProps {
   week: SaturdayWeek;
   previousWeight: number | null;
   previousWaist: number | null;
+  previousSystolic: number | null;
+  previousDiastolic: number | null;
   onSave: (data: {
     weight_lbs: number;
     waist_inches?: number | null;
+    systolic_mmhg?: number | null;
+    diastolic_mmhg?: number | null;
     notes?: string | null;
   }) => Promise<void>;
 }
@@ -26,6 +30,8 @@ export default function WeightEntryCard({
   week,
   previousWeight,
   previousWaist,
+  previousSystolic,
+  previousDiastolic,
   onSave,
 }: WeightEntryCardProps) {
   const [isEditing, setIsEditing] = useState(false);
@@ -34,6 +40,12 @@ export default function WeightEntryCard({
   );
   const [waist, setWaist] = useState(
     formatTo2Decimals(week.entry?.waist_inches) || ""
+  );
+  const [systolic, setSystolic] = useState(
+    formatTo2Decimals(week.entry?.systolic_mmhg) || ""
+  );
+  const [diastolic, setDiastolic] = useState(
+    formatTo2Decimals(week.entry?.diastolic_mmhg) || ""
   );
   const [notes, setNotes] = useState(week.entry?.notes || "");
   const [isSaving, setIsSaving] = useState(false);
@@ -52,6 +64,14 @@ export default function WeightEntryCard({
     hasEntry && previousWaist && week.entry?.waist_inches
       ? week.entry.waist_inches - previousWaist
       : null;
+  const systolicChange =
+    hasEntry && previousSystolic && week.entry?.systolic_mmhg
+      ? week.entry.systolic_mmhg - previousSystolic
+      : null;
+  const diastolicChange =
+    hasEntry && previousDiastolic && week.entry?.diastolic_mmhg
+      ? week.entry.diastolic_mmhg - previousDiastolic
+      : null;
 
   // Format weight on blur to 2 decimal places
   const handleWeightBlur = () => {
@@ -67,6 +87,20 @@ export default function WeightEntryCard({
     }
   };
 
+  // Format systolic on blur to 2 decimal places
+  const handleSystolicBlur = () => {
+    if (systolic) {
+      setSystolic(parseFloat(systolic).toFixed(2));
+    }
+  };
+
+  // Format diastolic on blur to 2 decimal places
+  const handleDiastolicBlur = () => {
+    if (diastolic) {
+      setDiastolic(parseFloat(diastolic).toFixed(2));
+    }
+  };
+
   const handleSave = async () => {
     if (!weight || parseFloat(weight) <= 0) return;
 
@@ -75,12 +109,20 @@ export default function WeightEntryCard({
     const formattedWaist = waist
       ? parseFloat(parseFloat(waist).toFixed(2))
       : null;
+    const formattedSystolic = systolic
+      ? parseFloat(parseFloat(systolic).toFixed(2))
+      : null;
+    const formattedDiastolic = diastolic
+      ? parseFloat(parseFloat(diastolic).toFixed(2))
+      : null;
 
     setIsSaving(true);
     try {
       await onSave({
         weight_lbs: formattedWeight,
         waist_inches: formattedWaist,
+        systolic_mmhg: formattedSystolic,
+        diastolic_mmhg: formattedDiastolic,
         notes: notes || null,
       });
       setIsEditing(false);
@@ -94,6 +136,8 @@ export default function WeightEntryCard({
   const handleCancel = () => {
     setWeight(formatTo2Decimals(week.entry?.weight_lbs) || "");
     setWaist(formatTo2Decimals(week.entry?.waist_inches) || "");
+    setSystolic(formatTo2Decimals(week.entry?.systolic_mmhg) || "");
+    setDiastolic(formatTo2Decimals(week.entry?.diastolic_mmhg) || "");
     setNotes(week.entry?.notes || "");
     setIsEditing(false);
   };
@@ -174,6 +218,36 @@ export default function WeightEntryCard({
               />
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-xs text-gray-500 uppercase tracking-wider">
+                Systolic (mmHg)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                value={systolic}
+                onChange={(e) => setSystolic(e.target.value)}
+                onBlur={handleSystolicBlur}
+                className="w-full mt-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-[#00d4aa]"
+                placeholder="120.00"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500 uppercase tracking-wider">
+                Diastolic (mmHg)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                value={diastolic}
+                onChange={(e) => setDiastolic(e.target.value)}
+                onBlur={handleDiastolicBlur}
+                className="w-full mt-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-[#00d4aa]"
+                placeholder="80.00"
+              />
+            </div>
+          </div>
           <div>
             <label className="text-xs text-gray-500 uppercase tracking-wider">
               Notes
@@ -208,7 +282,7 @@ export default function WeightEntryCard({
         <div>
           {hasEntry ? (
             <div className="flex items-center justify-between">
-              <div className="grid grid-cols-3 gap-4 flex-1">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1">
                 <div>
                   <p className="text-xs text-gray-500 uppercase tracking-wider">
                     Weight
@@ -253,6 +327,35 @@ export default function WeightEntryCard({
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 uppercase tracking-wider">
+                    Blood Pressure
+                  </p>
+                  {week.entry!.systolic_mmhg && week.entry!.diastolic_mmhg ? (
+                    <>
+                      <p className="text-xl font-bold text-white">
+                        {week.entry!.systolic_mmhg.toFixed(0)}/
+                        {week.entry!.diastolic_mmhg.toFixed(0)}
+                      </p>
+                      {(systolicChange !== null ||
+                        diastolicChange !== null) && (
+                        <p
+                          className={`text-sm ${
+                            (systolicChange || 0) <= 0
+                              ? "text-green-400"
+                              : "text-red-400"
+                          }`}
+                        >
+                          {(systolicChange || 0) <= 0 ? "↓" : "↑"}{" "}
+                          {Math.abs(systolicChange || 0).toFixed(0)}/
+                          {Math.abs(diastolicChange || 0).toFixed(0)}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-gray-500">—</p>
+                  )}
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider">
                     Notes
                   </p>
                   <p className="text-sm text-gray-300 truncate">
@@ -269,7 +372,7 @@ export default function WeightEntryCard({
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <div className="grid grid-cols-3 gap-4 flex-1 text-gray-500">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1 text-gray-500">
                 <div>
                   <p className="text-xs uppercase tracking-wider">Weight</p>
                   <p className="text-lg">___._</p>
@@ -277,6 +380,10 @@ export default function WeightEntryCard({
                 <div>
                   <p className="text-xs uppercase tracking-wider">Waist</p>
                   <p className="text-lg">__._</p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wider">BP</p>
+                  <p className="text-lg">___/___</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider">Notes</p>

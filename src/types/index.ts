@@ -3,6 +3,8 @@ export interface WeightEntry {
   measurement_date: string;
   weight_lbs: number;
   waist_inches: number | null;
+  systolic_mmhg: number | null;
+  diastolic_mmhg: number | null;
   notes: string | null;
   created_at: string;
   updated_at: string;
@@ -12,6 +14,8 @@ export interface WeightEntryInput {
   measurement_date: string;
   weight_lbs: number;
   waist_inches?: number | null;
+  systolic_mmhg?: number | null;
+  diastolic_mmhg?: number | null;
   notes?: string | null;
 }
 
@@ -35,6 +39,8 @@ export interface WeightStats {
   startingWaist: number | null;
   currentWaist: number | null;
   totalWaistLost: number | null;
+  currentSystolic: number | null;
+  currentDiastolic: number | null;
 }
 
 export interface HealthProjections {

@@ -40,6 +40,8 @@ export async function upsertWeightEntry(entry: {
   measurement_date: string;
   weight_lbs: number;
   waist_inches?: number | null;
+  systolic_mmhg?: number | null;
+  diastolic_mmhg?: number | null;
   notes?: string | null;
 }) {
   const { data, error } = await supabase

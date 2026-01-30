@@ -151,6 +151,10 @@ export function calculateWeightStats(entries: WeightEntry[]): WeightStats {
   const totalWaistLost =
     currentWaist !== null ? startingWaist - currentWaist : null;
 
+  // Get latest blood pressure readings
+  const currentSystolic = lastEntry?.systolic_mmhg || null;
+  const currentDiastolic = lastEntry?.diastolic_mmhg || null;
+
   return {
     startingWeight,
     currentWeight,
@@ -162,6 +166,8 @@ export function calculateWeightStats(entries: WeightEntry[]): WeightStats {
     currentWaist,
     totalWaistLost:
       totalWaistLost !== null ? Number(totalWaistLost.toFixed(1)) : null,
+    currentSystolic,
+    currentDiastolic,
   };
 }
 
