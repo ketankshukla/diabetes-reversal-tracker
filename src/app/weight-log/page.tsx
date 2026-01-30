@@ -12,6 +12,7 @@ import {
   TARGET_REMISSION,
 } from "@/lib/calculations";
 import WeightEntryCard from "@/components/WeightEntryCard";
+import BloodPressureChart from "@/components/BloodPressureChart";
 import {
   Scale,
   TrendingDown,
@@ -301,6 +302,11 @@ export default function WeightLogPage() {
             lbs to Remission
           </p>
         </div>
+      </div>
+
+      {/* Blood Pressure Reference Chart */}
+      <div className="mb-6">
+        <BloodPressureChart />
       </div>
 
       {/* Weekly Entries */}
