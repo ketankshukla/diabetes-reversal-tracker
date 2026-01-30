@@ -11,6 +11,7 @@ import {
   Menu,
   X,
   Sparkles,
+  Droplets,
 } from "lucide-react";
 import { calculateDaysElapsed } from "@/lib/calculations";
 
@@ -23,6 +24,12 @@ const menuItems = [
   { href: "/weight-log", label: "Weight Log", icon: Scale, emoji: "⚖️" },
   { href: "/supplements", label: "Supplements", icon: Pill, emoji: "💊" },
   { href: "/lab-tests", label: "Lab Tests", icon: TestTube, emoji: "🩺" },
+  {
+    href: "/kidney-health",
+    label: "Kidney Health",
+    icon: Droplets,
+    emoji: "💧",
+  },
   {
     href: "/skin-transformation",
     label: "Skin Transformation",
