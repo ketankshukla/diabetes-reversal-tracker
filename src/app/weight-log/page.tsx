@@ -23,10 +23,13 @@ import {
   Flame,
   Activity,
   Heart,
+  Info,
+  X,
 } from "lucide-react";
 
 export default function WeightLogPage() {
   const [saturdays, setSaturdays] = useState<SaturdayWeek[]>([]);
+  const [showBPChart, setShowBPChart] = useState(false);
   const [stats, setStats] = useState<WeightStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -271,7 +274,10 @@ export default function WeightLogPage() {
             Avg lbs/week
           </p>
         </div>
-        <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
+        <div
+          className="bg-white/5 rounded-xl p-4 border border-white/10 text-center cursor-pointer hover:bg-white/10 transition-colors relative group"
+          onClick={() => setShowBPChart(true)}
+        >
           <Heart size={20} className="text-[#f472b6] mx-auto mb-2" />
           <p className="text-2xl font-bold text-white">
             {stats?.currentSystolic && stats?.currentDiastolic
@@ -283,6 +289,9 @@ export default function WeightLogPage() {
           <p className="text-xs text-gray-500 uppercase tracking-wider">
             Blood Pressure
           </p>
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Info size={14} className="text-gray-400" />
+          </div>
         </div>
         <div className="bg-white/5 rounded-xl p-4 border border-white/10 text-center">
           <Trophy size={20} className="text-[#fbbf24] mx-auto mb-2" />
@@ -304,10 +313,26 @@ export default function WeightLogPage() {
         </div>
       </div>
 
-      {/* Blood Pressure Reference Chart */}
-      <div className="mb-6">
-        <BloodPressureChart />
-      </div>
+      {/* Blood Pressure Chart Modal */}
+      {showBPChart && (
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowBPChart(false)}
+        >
+          <div
+            className="relative max-w-lg w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowBPChart(false)}
+              className="absolute -top-3 -right-3 bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+            >
+              <X size={20} className="text-white" />
+            </button>
+            <BloodPressureChart />
+          </div>
+        </div>
+      )}
 
       {/* Weekly Entries */}
       <div className="mb-4">
