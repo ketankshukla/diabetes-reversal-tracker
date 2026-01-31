@@ -82,11 +82,16 @@ export default function WeightLogPage() {
       notes?: string | null;
     }
   ) => {
-    await upsertWeightEntry({
-      measurement_date: dateString,
-      ...data,
-    });
-    await loadData();
+    try {
+      await upsertWeightEntry({
+        measurement_date: dateString,
+        ...data,
+      });
+      await loadData();
+    } catch (error) {
+      console.error("handleSave error:", error);
+      throw error;
+    }
   };
 
   if (isLoading) {
