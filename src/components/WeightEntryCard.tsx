@@ -129,11 +129,12 @@ export default function WeightEntryCard({
         diastolic_mmhg: formattedDiastolic,
         notes: notes || null,
       });
+      alert("✅ Data saved successfully!");
       setIsEditing(false);
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
-      alert(`Failed to save: ${errorMessage}`);
+      alert(`❌ Failed to save: ${errorMessage}`);
     } finally {
       setIsSaving(false);
     }
