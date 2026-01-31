@@ -102,7 +102,10 @@ export default function WeightEntryCard({
   };
 
   const handleSave = async () => {
-    if (!weight || parseFloat(weight) <= 0) return;
+    if (!weight || parseFloat(weight) <= 0) {
+      alert("Please enter a valid weight greater than 0");
+      return;
+    }
 
     // Format to 2 decimal places before saving
     const formattedWeight = parseFloat(parseFloat(weight).toFixed(2));
@@ -126,8 +129,10 @@ export default function WeightEntryCard({
         notes: notes || null,
       });
       setIsEditing(false);
-    } catch (error) {
-      console.error("Failed to save:", error);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
+      alert(`Failed to save: ${errorMessage}`);
     } finally {
       setIsSaving(false);
     }
@@ -265,10 +270,10 @@ export default function WeightEntryCard({
               type="button"
               onClick={handleSave}
               disabled={isSaving || !weight}
-              className="flex-1 bg-[#00d4aa] hover:bg-[#00b894] disabled:opacity-50 text-black font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 bg-[#00d4aa] hover:bg-[#00b894] disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-500 text-black font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
             >
               <Save size={16} />
-              {isSaving ? "Saving..." : "Save"}
+              {isSaving ? "Saving..." : !weight ? "Enter Weight First" : "Save"}
             </button>
             <button
               type="button"

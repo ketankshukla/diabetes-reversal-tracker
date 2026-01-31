@@ -51,8 +51,8 @@ export async function upsertWeightEntry(entry: {
     .single();
 
   if (error) {
-    console.error("Error upserting weight entry:", error);
-    throw error;
+    console.error("Supabase upsert error:", error);
+    throw new Error(`Database error: ${error.message}`);
   }
 
   return data;
