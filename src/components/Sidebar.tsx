@@ -12,6 +12,7 @@ import {
   X,
   Sparkles,
   Droplets,
+  Target,
 } from "lucide-react";
 import { calculateDaysElapsed } from "@/lib/calculations";
 
@@ -35,6 +36,12 @@ const menuItems = [
     label: "Skin Transformation",
     icon: Sparkles,
     emoji: "✨",
+  },
+  {
+    href: "/a1c-protocol",
+    label: "A1c Protocol",
+    icon: Target,
+    emoji: "🎯",
   },
 ];
 
