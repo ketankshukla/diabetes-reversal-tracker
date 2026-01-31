@@ -262,6 +262,7 @@ export default function WeightEntryCard({
           </div>
           <div className="flex gap-2">
             <button
+              type="button"
               onClick={handleSave}
               disabled={isSaving || !weight}
               className="flex-1 bg-[#00d4aa] hover:bg-[#00b894] disabled:opacity-50 text-black font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
@@ -270,6 +271,7 @@ export default function WeightEntryCard({
               {isSaving ? "Saving..." : "Save"}
             </button>
             <button
+              type="button"
               onClick={handleCancel}
               className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg flex items-center gap-2 transition-colors"
             >
