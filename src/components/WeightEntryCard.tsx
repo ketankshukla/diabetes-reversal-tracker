@@ -102,13 +102,14 @@ export default function WeightEntryCard({
   };
 
   const handleSave = async () => {
-    if (!weight || parseFloat(weight) <= 0) {
+    const weightNum = parseFloat(weight);
+    if (!weight || isNaN(weightNum) || weightNum <= 0) {
       alert("Please enter a valid weight greater than 0");
       return;
     }
 
     // Format to 2 decimal places before saving
-    const formattedWeight = parseFloat(parseFloat(weight).toFixed(2));
+    const formattedWeight = parseFloat(weightNum.toFixed(2));
     const formattedWaist = waist
       ? parseFloat(parseFloat(waist).toFixed(2))
       : null;
