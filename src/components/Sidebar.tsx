@@ -13,6 +13,7 @@ import {
   Sparkles,
   Droplets,
   Target,
+  UtensilsCrossed,
 } from "lucide-react";
 import { calculateDaysElapsed } from "@/lib/calculations";
 
@@ -42,6 +43,12 @@ const menuItems = [
     label: "A1c Protocol",
     icon: Target,
     emoji: "🎯",
+  },
+  {
+    href: "/a1c-super-meal-plan",
+    label: "A1c Super Meal Plan",
+    icon: UtensilsCrossed,
+    emoji: "⭐",
   },
 ];
 
