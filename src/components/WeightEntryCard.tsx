@@ -269,15 +269,16 @@ export default function WeightEntryCard({
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={() => {
-                alert("Button clicked! Now attempting to save...");
-                handleSave();
-              }}
+              onClick={handleSave}
               disabled={isSaving || !weight}
-              className="flex-1 bg-[#00d4aa] hover:bg-[#00b894] disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-500 text-black font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+              className={`flex-1 py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors font-semibold ${
+                isSaving || !weight
+                  ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                  : "bg-[#00d4aa] hover:bg-[#00b894] text-black cursor-pointer"
+              }`}
             >
               <Save size={16} />
-              {isSaving ? "Saving..." : !weight ? "Enter Weight First" : "Save"}
+              {isSaving ? "Saving..." : !weight ? "Enter Weight" : "Save"}
             </button>
             <button
               type="button"
