@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Sidebar from '@/components/Sidebar';
-import { getLatestWeightEntry } from '@/lib/supabase';
-import { STARTING_WEIGHT } from '@/lib/calculations';
+import React, { useState, useEffect } from "react";
+import Sidebar from "@/components/Sidebar";
+import { getLatestWeightEntry } from "@/lib/supabase";
+import { STARTING_WEIGHT } from "@/lib/calculations";
+import { Toaster } from "sonner";
 
-export default function ClientLayout({ children }: { children: React.ReactNode }) {
+export default function ClientLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [currentWeight, setCurrentWeight] = useState(STARTING_WEIGHT);
 
   useEffect(() => {
@@ -20,10 +25,18 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0f] via-[#1a1a2e] to-[#0f0f1a]">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: "#1a1a2e",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: "#fff",
+          },
+        }}
+      />
       <Sidebar currentWeight={currentWeight} />
-      <main className="lg:ml-[250px] min-h-screen">
-        {children}
-      </main>
+      <main className="lg:ml-[250px] min-h-screen">{children}</main>
     </div>
   );
 }

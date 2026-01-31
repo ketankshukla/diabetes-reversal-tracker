@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { SaturdayWeek } from "@/types";
 import { Check, Edit2, X, Save, Lock } from "lucide-react";
 import { isTodaySaturday } from "@/lib/calculations";
+import { toast } from "sonner";
 
 interface WeightEntryCardProps {
   week: SaturdayWeek;
@@ -104,11 +105,10 @@ export default function WeightEntryCard({
   const handleSave = async () => {
     const weightNum = parseFloat(weight);
     if (!weight || isNaN(weightNum) || weightNum <= 0) {
-      alert("Please enter a valid weight greater than 0");
+      toast.error("Please enter a valid weight greater than 0");
       return;
     }
 
-    // Format to 2 decimal places before saving
     const formattedWeight = parseFloat(weightNum.toFixed(2));
     const formattedWaist = waist
       ? parseFloat(parseFloat(waist).toFixed(2))
@@ -129,12 +129,12 @@ export default function WeightEntryCard({
         diastolic_mmhg: formattedDiastolic,
         notes: notes || null,
       });
-      alert("✅ Data saved successfully!");
+      toast.success("Data saved successfully!");
       setIsEditing(false);
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error occurred";
-      alert(`❌ Failed to save: ${errorMessage}`);
+      toast.error(`Failed to save: ${errorMessage}`);
     } finally {
       setIsSaving(false);
     }

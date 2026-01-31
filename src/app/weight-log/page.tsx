@@ -82,24 +82,11 @@ export default function WeightLogPage() {
       notes?: string | null;
     }
   ) => {
-    console.log("Parent handleSave called with:", { dateString, data });
-    try {
-      const result = await upsertWeightEntry({
-        measurement_date: dateString,
-        ...data,
-      });
-      console.log("Upsert result:", result);
-      await loadData();
-      console.log("Data reloaded successfully");
-    } catch (error) {
-      console.error("handleSave error:", error);
-      alert(
-        `Save failed: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
-      throw error;
-    }
+    await upsertWeightEntry({
+      measurement_date: dateString,
+      ...data,
+    });
+    await loadData();
   };
 
   if (isLoading) {
