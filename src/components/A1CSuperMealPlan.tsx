@@ -74,6 +74,121 @@ export default function A1CSuperMealPlan() {
           </div>
         </div>
 
+        {/* Protein Calculator */}
+        <div style={{
+          background: '#1e293b',
+          borderRadius: '16px',
+          padding: '20px',
+          marginBottom: '20px',
+          border: '2px solid #06b6d4',
+        }}>
+          <h2 style={{ color: '#22d3ee', margin: '0 0 15px 0', fontSize: '1.2rem' }}>
+            🧮 Protein Calculator
+          </h2>
+          <p style={{ color: '#94a3b8', fontSize: '0.85rem', margin: '0 0 15px 0' }}>
+            Tray composition varies! Use this to calculate your meal protein.
+          </p>
+          
+          {/* Protein per piece reference */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '10px',
+            marginBottom: '15px',
+          }}>
+            <div style={{ 
+              background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', 
+              padding: '15px', 
+              borderRadius: '12px',
+              border: '2px solid #f97316',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '2rem', marginBottom: '5px' }}>🍗</div>
+              <div style={{ color: '#f97316', fontWeight: 800, fontSize: '1.3rem' }}>DRUMSTICK</div>
+              <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.5rem', marginTop: '5px' }}>~10-11g</div>
+              <div style={{ color: '#94a3b8', fontSize: '0.75rem' }}>protein each</div>
+              <div style={{ color: '#86efac', fontSize: '0.8rem', marginTop: '8px', fontWeight: 600 }}>⭐ More meat!</div>
+            </div>
+            <div style={{ 
+              background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', 
+              padding: '15px', 
+              borderRadius: '12px',
+              border: '2px solid #fbbf24',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '2rem', marginBottom: '5px' }}>🍗</div>
+              <div style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.3rem' }}>WING</div>
+              <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.5rem', marginTop: '5px' }}>~6-7g</div>
+              <div style={{ color: '#94a3b8', fontSize: '0.75rem' }}>protein each</div>
+              <div style={{ color: '#fca5a5', fontSize: '0.8rem', marginTop: '8px', fontWeight: 600 }}>Smaller piece</div>
+            </div>
+          </div>
+
+          {/* Quick reference combos */}
+          <div style={{
+            background: '#0f172a',
+            borderRadius: '12px',
+            padding: '15px',
+            marginBottom: '15px',
+          }}>
+            <div style={{ color: '#22d3ee', fontWeight: 700, fontSize: '0.9rem', marginBottom: '10px' }}>
+              🎯 QUICK COMBOS TO HIT ~40g PROTEIN:
+            </div>
+            <div style={{ display: 'grid', gap: '8px' }}>
+              {[
+                { combo: '4 drumsticks', protein: '~40-44g', rating: '⭐⭐⭐' },
+                { combo: '3 drums + 2 wings', protein: '~42g', rating: '⭐⭐⭐' },
+                { combo: '2 drums + 3 wings', protein: '~38g', rating: '⭐⭐' },
+                { combo: '1 drum + 5 wings', protein: '~40g', rating: '⭐⭐' },
+                { combo: '6 wings only', protein: '~36-42g', rating: '⭐' },
+              ].map((item, idx) => (
+                <div key={idx} style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  background: '#1e293b',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                }}>
+                  <span style={{ color: '#e2e8f0', fontSize: '0.85rem' }}>{item.combo}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ color: '#60a5fa', fontWeight: 700, fontSize: '0.85rem' }}>{item.protein}</span>
+                    <span style={{ fontSize: '0.7rem' }}>{item.rating}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Rule of thumb */}
+          <div style={{
+            background: 'linear-gradient(135deg, #22c55e20 0%, #0f172a 100%)',
+            borderRadius: '12px',
+            padding: '15px',
+            border: '1px solid #22c55e40',
+          }}>
+            <div style={{ color: '#86efac', fontWeight: 700, marginBottom: '8px' }}>💡 Rule of Thumb:</div>
+            <div style={{ color: '#d1fae5', fontSize: '0.9rem' }}>
+              <strong>Prioritize drumsticks</strong> — they have ~40% more protein per piece than wings. 
+              If you get a wing-heavy tray, grab 1-2 extra pieces to hit your protein target.
+            </div>
+          </div>
+
+          {/* Tray variation warning */}
+          <div style={{
+            marginTop: '15px',
+            background: '#fbbf2420',
+            borderRadius: '8px',
+            padding: '12px',
+            border: '1px solid #fbbf2440',
+          }}>
+            <div style={{ color: '#fef3c7', fontSize: '0.85rem' }}>
+              <strong>⚠️ Tray Variation:</strong> Your tray had 11 wings + 9 drums. Others may have different ratios. 
+              The tray weight (~2.37 lb) is more consistent than piece count.
+            </div>
+          </div>
+        </div>
+
         {/* EGGS + BERRIES PLAN */}
         {planType === 'eggs' && (
           <div style={{
@@ -215,26 +330,28 @@ export default function A1CSuperMealPlan() {
               
               <div style={{ display: 'grid', gap: '8px' }}>
                 <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
                   background: '#1e293b',
-                  padding: '10px 12px',
-                  borderRadius: '8px'
+                  padding: '12px',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #f97316'
                 }}>
-                  <span style={{ color: '#e2e8f0' }}>🍗🍗 <strong>2 small drumsticks</strong></span>
-                  <span style={{ color: '#60a5fa', fontWeight: 600 }}>~22g protein</span>
+                  <div style={{ color: '#f97316', fontSize: '0.75rem', fontWeight: 600, marginBottom: '4px' }}>OPTION A (drum-heavy)</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#e2e8f0' }}>🍗🍗🍗 <strong>3 drums + 2 wings</strong></span>
+                    <span style={{ color: '#60a5fa', fontWeight: 600 }}>~42g</span>
+                  </div>
                 </div>
                 <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
                   background: '#1e293b',
-                  padding: '10px 12px',
-                  borderRadius: '8px'
+                  padding: '12px',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #fbbf24'
                 }}>
-                  <span style={{ color: '#e2e8f0' }}>🍗🍗🍗 <strong>3 small wings</strong></span>
-                  <span style={{ color: '#60a5fa', fontWeight: 600 }}>~20g protein</span>
+                  <div style={{ color: '#fbbf24', fontSize: '0.75rem', fontWeight: 600, marginBottom: '4px' }}>OPTION B (wing-heavy)</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#e2e8f0' }}>🍗🍗 <strong>2 drums + 4 wings</strong></span>
+                    <span style={{ color: '#60a5fa', fontWeight: 600 }}>~44g</span>
+                  </div>
                 </div>
               </div>
               
@@ -248,19 +365,19 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <div>
-                  <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.1rem' }}>~42g</div>
+                  <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.1rem' }}>~40-44g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>PROTEIN</div>
                 </div>
                 <div>
-                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem' }}>~25g</div>
+                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem' }}>~22-28g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>FAT</div>
                 </div>
                 <div>
-                  <div style={{ color: '#22c55e', fontWeight: 700, fontSize: '1.1rem' }}>0g</div>
+                  <div style={{ color: '#22c55e', fontWeight: 700, fontSize: '1.1rem' }}>~2g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>CARBS</div>
                 </div>
                 <div>
-                  <div style={{ color: '#f87171', fontWeight: 700, fontSize: '1.1rem' }}>~420</div>
+                  <div style={{ color: '#f87171', fontWeight: 700, fontSize: '1.1rem' }}>~400</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>CAL</div>
                 </div>
               </div>
@@ -273,7 +390,7 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <span style={{ color: '#fef3c7', fontSize: '0.8rem' }}>
-                  💡 <strong>5 pieces total</strong> — mix wings & drums however you like!
+                  💡 <strong>5-6 pieces total</strong> — adjust based on what&apos;s in your tray!
                 </span>
               </div>
             </div>
@@ -295,19 +412,19 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
-                  <div style={{ color: '#60a5fa', fontWeight: 800, fontSize: '1.4rem' }}>~74g</div>
+                  <div style={{ color: '#60a5fa', fontWeight: 800, fontSize: '1.4rem' }}>~72-76g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>PROTEIN ✅</div>
                 </div>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
-                  <div style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.4rem' }}>~54g</div>
+                  <div style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.4rem' }}>~51-57g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>FAT</div>
                 </div>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
-                  <div style={{ color: '#22c55e', fontWeight: 800, fontSize: '1.4rem' }}>~15g</div>
+                  <div style={{ color: '#22c55e', fontWeight: 800, fontSize: '1.4rem' }}>~17g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>CARBS ✅</div>
                 </div>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
-                  <div style={{ color: '#f87171', fontWeight: 800, fontSize: '1.4rem' }}>~850</div>
+                  <div style={{ color: '#f87171', fontWeight: 800, fontSize: '1.4rem' }}>~830</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>CALORIES</div>
                 </div>
               </div>
@@ -320,7 +437,7 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <div style={{ color: '#86efac', fontSize: '0.85rem' }}>
-                  🍗 <strong>Chicken usage:</strong> 5 pieces/day for dinner only
+                  🍗 <strong>Chicken usage:</strong> 5-6 pieces/day for dinner only = tray lasts ~3-4 days
                 </div>
               </div>
             </div>
@@ -375,15 +492,28 @@ export default function A1CSuperMealPlan() {
               
               <div style={{ display: 'grid', gap: '8px' }}>
                 <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
                   background: '#1e293b',
-                  padding: '10px 12px',
-                  borderRadius: '8px'
+                  padding: '12px',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #f97316'
                 }}>
-                  <span style={{ color: '#e2e8f0' }}>🍗 <strong>2 wings + 2 drumsticks</strong></span>
-                  <span style={{ color: '#60a5fa', fontWeight: 600 }}>~34g protein</span>
+                  <div style={{ color: '#f97316', fontSize: '0.75rem', fontWeight: 600, marginBottom: '4px' }}>OPTION A (drum-heavy tray)</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#e2e8f0' }}>🍗 <strong>3 drums + 1 wing</strong></span>
+                    <span style={{ color: '#60a5fa', fontWeight: 600 }}>~36g</span>
+                  </div>
+                </div>
+                <div style={{ 
+                  background: '#1e293b',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #fbbf24'
+                }}>
+                  <div style={{ color: '#fbbf24', fontSize: '0.75rem', fontWeight: 600, marginBottom: '4px' }}>OPTION B (wing-heavy tray)</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#e2e8f0' }}>🍗 <strong>2 drums + 3 wings</strong></span>
+                    <span style={{ color: '#60a5fa', fontWeight: 600 }}>~38g</span>
+                  </div>
                 </div>
                 <div style={{ 
                   display: 'flex', 
@@ -408,11 +538,11 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <div>
-                  <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.1rem' }}>~34g</div>
+                  <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.1rem' }}>~36-38g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>PROTEIN</div>
                 </div>
                 <div>
-                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem' }}>~22g</div>
+                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem' }}>~20-24g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>FAT</div>
                 </div>
                 <div>
@@ -420,7 +550,7 @@ export default function A1CSuperMealPlan() {
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>CARBS</div>
                 </div>
                 <div>
-                  <div style={{ color: '#f87171', fontWeight: 700, fontSize: '1.1rem' }}>~390</div>
+                  <div style={{ color: '#f87171', fontWeight: 700, fontSize: '1.1rem' }}>~380</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>CAL</div>
                 </div>
               </div>
@@ -433,7 +563,7 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <span style={{ color: '#fef3c7', fontSize: '0.8rem' }}>
-                  💡 <strong>4 pieces total</strong> — need more than eggs plan to hit protein!
+                  💡 <strong>4-5 pieces total</strong> — adjust based on what&apos;s in your tray!
                 </span>
               </div>
             </div>
@@ -469,15 +599,28 @@ export default function A1CSuperMealPlan() {
               
               <div style={{ display: 'grid', gap: '8px' }}>
                 <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
                   background: '#1e293b',
-                  padding: '10px 12px',
-                  borderRadius: '8px'
+                  padding: '12px',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #f97316'
                 }}>
-                  <span style={{ color: '#e2e8f0' }}>🍗 <strong>3 wings + 2 drumsticks</strong></span>
-                  <span style={{ color: '#60a5fa', fontWeight: 600 }}>~40g protein</span>
+                  <div style={{ color: '#f97316', fontSize: '0.75rem', fontWeight: 600, marginBottom: '4px' }}>OPTION A (drum-heavy)</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#e2e8f0' }}>🍗 <strong>3 drums + 2 wings</strong></span>
+                    <span style={{ color: '#60a5fa', fontWeight: 600 }}>~42g</span>
+                  </div>
+                </div>
+                <div style={{ 
+                  background: '#1e293b',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  borderLeft: '3px solid #fbbf24'
+                }}>
+                  <div style={{ color: '#fbbf24', fontSize: '0.75rem', fontWeight: 600, marginBottom: '4px' }}>OPTION B (wing-heavy)</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#e2e8f0' }}>🍗 <strong>2 drums + 4 wings</strong></span>
+                    <span style={{ color: '#60a5fa', fontWeight: 600 }}>~44g</span>
+                  </div>
                 </div>
               </div>
               
@@ -491,11 +634,11 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <div>
-                  <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.1rem' }}>~40g</div>
+                  <div style={{ color: '#60a5fa', fontWeight: 700, fontSize: '1.1rem' }}>~40-44g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>PROTEIN</div>
                 </div>
                 <div>
-                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem' }}>~25g</div>
+                  <div style={{ color: '#fbbf24', fontWeight: 700, fontSize: '1.1rem' }}>~22-28g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.7rem' }}>FAT</div>
                 </div>
                 <div>
@@ -516,7 +659,7 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <span style={{ color: '#fef3c7', fontSize: '0.8rem' }}>
-                  💡 <strong>5 pieces total</strong> — exactly what you had tonight!
+                  💡 <strong>5-6 pieces total</strong> — same as what you had tonight!
                 </span>
               </div>
             </div>
@@ -538,11 +681,11 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
-                  <div style={{ color: '#60a5fa', fontWeight: 800, fontSize: '1.4rem' }}>~74g</div>
+                  <div style={{ color: '#60a5fa', fontWeight: 800, fontSize: '1.4rem' }}>~76-82g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>PROTEIN ✅</div>
                 </div>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
-                  <div style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.4rem' }}>~47g</div>
+                  <div style={{ color: '#fbbf24', fontWeight: 800, fontSize: '1.4rem' }}>~42-52g</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>FAT</div>
                 </div>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
@@ -550,7 +693,7 @@ export default function A1CSuperMealPlan() {
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>CARBS ✅</div>
                 </div>
                 <div style={{ background: '#1e293b', padding: '10px 5px', borderRadius: '8px' }}>
-                  <div style={{ color: '#f87171', fontWeight: 800, fontSize: '1.4rem' }}>~790</div>
+                  <div style={{ color: '#f87171', fontWeight: 800, fontSize: '1.4rem' }}>~780</div>
                   <div style={{ color: '#94a3b8', fontSize: '0.65rem' }}>CALORIES</div>
                 </div>
               </div>
@@ -563,7 +706,7 @@ export default function A1CSuperMealPlan() {
                 textAlign: 'center'
               }}>
                 <div style={{ color: '#fca5a5', fontSize: '0.85rem' }}>
-                  🍗 <strong>Chicken usage:</strong> 9 pieces/day = 20pc tray lasts ~2 days
+                  🍗 <strong>Chicken usage:</strong> 9-11 pieces/day = 20pc tray lasts ~2 days
                 </div>
               </div>
             </div>
@@ -685,16 +828,16 @@ export default function A1CSuperMealPlan() {
             <tbody>
               <tr style={{ borderBottom: '1px solid #334155' }}>
                 <td style={{ padding: '10px', color: '#10b981' }}>🥚 Eggs + Berries</td>
-                <td style={{ padding: '10px', textAlign: 'center', color: '#60a5fa', fontWeight: 700 }}>~74g</td>
+                <td style={{ padding: '10px', textAlign: 'center', color: '#60a5fa', fontWeight: 700 }}>~72-76g</td>
                 <td style={{ padding: '10px', textAlign: 'center', color: '#22c55e' }}>~17g</td>
-                <td style={{ padding: '10px', textAlign: 'center', color: '#e2e8f0' }}>5 (dinner)</td>
-                <td style={{ padding: '10px', textAlign: 'center', color: '#fbbf24' }}>~4 days</td>
+                <td style={{ padding: '10px', textAlign: 'center', color: '#e2e8f0' }}>5-6 (dinner)</td>
+                <td style={{ padding: '10px', textAlign: 'center', color: '#fbbf24' }}>~3-4 days</td>
               </tr>
               <tr>
                 <td style={{ padding: '10px', color: '#f87171' }}>🍗 All Chicken</td>
-                <td style={{ padding: '10px', textAlign: 'center', color: '#60a5fa', fontWeight: 700 }}>~74g</td>
+                <td style={{ padding: '10px', textAlign: 'center', color: '#60a5fa', fontWeight: 700 }}>~76-82g</td>
                 <td style={{ padding: '10px', textAlign: 'center', color: '#22c55e' }}>~18g</td>
-                <td style={{ padding: '10px', textAlign: 'center', color: '#e2e8f0' }}>9 (4+5)</td>
+                <td style={{ padding: '10px', textAlign: 'center', color: '#e2e8f0' }}>9-11 (4-5+5-6)</td>
                 <td style={{ padding: '10px', textAlign: 'center', color: '#fbbf24' }}>~2 days</td>
               </tr>
             </tbody>
@@ -707,7 +850,7 @@ export default function A1CSuperMealPlan() {
             borderRadius: '8px',
           }}>
             <p style={{ margin: 0, color: '#86efac', fontSize: '0.85rem', textAlign: 'center' }}>
-              ✅ Both plans hit <strong>~74g protein</strong> and <strong>&lt;20g carbs</strong> — choose based on preference!
+              ✅ Both plans hit <strong>70g+ protein</strong> and <strong>&lt;20g carbs</strong> — adjust pieces based on your tray!
             </p>
           </div>
         </div>
