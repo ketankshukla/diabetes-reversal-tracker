@@ -1,9 +1,7 @@
-"use client";
-
 import React, { useState } from 'react';
 
-export default function A1CSuperMealPlan() {
-  const [planType, setPlanType] = useState<'eggs' | 'chicken'>('eggs');
+export default function CostcoDrumstickPlan() {
+  const [planType, setPlanType] = useState('eggs'); // 'eggs' or 'chicken'
 
   return (
     <div style={{
@@ -140,7 +138,7 @@ export default function A1CSuperMealPlan() {
                   padding: '10px 12px',
                   borderRadius: '8px'
                 }}>
-                  <span style={{ color: '#e2e8f0' }}>🧀 <strong>1&quot; cheddar stick</strong></span>
+                  <span style={{ color: '#e2e8f0' }}>🧀 <strong>1" cheddar stick</strong></span>
                   <span style={{ color: '#60a5fa', fontWeight: 600 }}>7g protein</span>
                 </div>
                 <div style={{ 
@@ -867,7 +865,7 @@ export default function A1CSuperMealPlan() {
           color: '#64748b', 
           fontSize: '0.8rem' 
         }}>
-          📅 Created: January 31, 2026 • For Ketan&apos;s A1C Protocol
+          📅 Created: January 31, 2026 • For Ketan's A1C Protocol
         </div>
       </div>
     </div>
