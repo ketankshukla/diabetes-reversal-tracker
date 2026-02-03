@@ -14,6 +14,7 @@ import {
   Droplets,
   Target,
   UtensilsCrossed,
+  Salad,
 } from "lucide-react";
 import { calculateDaysElapsed } from "@/lib/calculations";
 
@@ -49,6 +50,12 @@ const menuItems = [
     label: "A1c Super Meal Plan",
     icon: UtensilsCrossed,
     emoji: "⭐",
+  },
+  {
+    href: "/eggless-meals",
+    label: "Eggless Meals",
+    icon: Salad,
+    emoji: "🥗",
   },
 ];
 
