@@ -12,9 +12,7 @@ import {
   X,
   Sparkles,
   Droplets,
-  Target,
   UtensilsCrossed,
-  Salad,
 } from "lucide-react";
 import { calculateDaysElapsed } from "@/lib/calculations";
 
@@ -40,22 +38,10 @@ const menuItems = [
     emoji: "✨",
   },
   {
-    href: "/a1c-protocol",
-    label: "A1c Protocol",
-    icon: Target,
-    emoji: "🎯",
-  },
-  {
-    href: "/a1c-super-meal-plan",
-    label: "A1c Super Meal Plan",
+    href: "/omad-meal",
+    label: "OMAD Meal",
     icon: UtensilsCrossed,
-    emoji: "⭐",
-  },
-  {
-    href: "/eggless-meals",
-    label: "Eggless Meals",
-    icon: Salad,
-    emoji: "🥗",
+    emoji: "🍽️",
   },
 ];
 
