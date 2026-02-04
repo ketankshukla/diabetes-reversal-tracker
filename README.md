@@ -11,6 +11,7 @@ This 52-week program combines real-time health metrics tracking, educational res
 - **Health Metrics Tracking**: Log weekly weight, waist circumference, and blood pressure measurements (every Saturday)
 - **Health Projections**: Automatically calculate projected A1C, glucose levels, body fat percentage, and weeks to goals
 - **Progress Dashboard**: Visual progress bars toward goals with countdown timers to key milestones
+- **Health Command Center**: Centralized view of BP status, A1C predictions, and OMAD protocol with lab countdown
 - **OMAD Meal Planning**: Detailed One Meal A Day protocol with recipes, metformin timing, and microwave instructions
 - **Supplements Guide**: Categorized supplement recommendations (Essential, Recommended, Optional) with dosing and timing
 - **Lab Tests Guide**: Test scheduling, reference ranges, costs, and shopping cart for test selection
@@ -46,12 +47,13 @@ diabetes-reversal-tracker/
 │   │   ├── page.tsx                      # Dashboard home
 │   │   ├── layout.tsx                    # Root layout
 │   │   ├── client-layout.tsx             # Client-side wrapper
-│   │   ├── weight-log/page.tsx           # Health Metrics page
-│   │   ├── supplements/page.tsx          # Supplements guide
-│   │   ├── lab-tests/page.tsx            # Lab tests guide
-│   │   ├── kidney-health/page.tsx        # Kidney health guide
-│   │   ├── skin-transformation/page.tsx  # Skin health guide
-│   │   ├── omad-meal/page.tsx            # OMAD meal planning
+│   │   ├── health-command-center/        # Health Command Center
+│   │   ├── weight-log/                   # Health Metrics page
+│   │   ├── supplements/                  # Supplements guide
+│   │   ├── lab-tests/                    # Lab tests guide
+│   │   ├── kidney-health/                # Kidney health guide
+│   │   ├── skin-transformation/          # Skin health guide
+│   │   ├── omad-meal/                    # OMAD meal planning
 │   │   └── globals.css                   # Global styles
 │   ├── components/                       # React components
 │   │   ├── DiabetesReversalTracker.tsx   # Main dashboard
@@ -88,7 +90,7 @@ diabetes-reversal-tracker/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/diabetes-reversal-tracker.git
+   git clone https://github.com/ketankshukla/diabetes-reversal-tracker.git
    cd diabetes-reversal-tracker
    ```
 
@@ -138,6 +140,7 @@ diabetes-reversal-tracker/
 |-------|-------------|
 | `/` | Dashboard with progress overview, countdowns, and achievements |
 | `/weight-log` | Weekly health metrics entry and tracking |
+| `/health-command-center` | BP tracking, A1C predictions, and OMAD protocol overview |
 | `/supplements` | Supplement recommendations with dosing guides |
 | `/lab-tests` | Lab test scheduling with reference ranges |
 | `/kidney-health` | Kidney recovery protocol and monitoring |
