@@ -13,6 +13,7 @@ import {
   Sparkles,
   Droplets,
   UtensilsCrossed,
+  Activity,
 } from "lucide-react";
 import { calculateDaysElapsed } from "@/lib/calculations";
 
@@ -22,7 +23,13 @@ interface SidebarProps {
 
 const menuItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard, emoji: "📊" },
-  { href: "/weight-log", label: "Health Metrics", icon: Scale, emoji: "�" },
+  { href: "/weight-log", label: "Health Metrics", icon: Scale, emoji: "⚖️" },
+  {
+    href: "/health-command-center",
+    label: "Health Command Center",
+    icon: Activity,
+    emoji: "🎯",
+  },
   { href: "/supplements", label: "Supplements", icon: Pill, emoji: "💊" },
   { href: "/lab-tests", label: "Lab Tests", icon: TestTube, emoji: "🩺" },
   {

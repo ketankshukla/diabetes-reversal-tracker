@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd comprehensive project documentation to README\n\n- Document application purpose and features\n- List complete tech stack \\(Next.js, React, TypeScript, Supabase\\)\n- Detail project structure with all directories and files\n- Include installation and setup instructions\n- Document database schema and table structure\n- List all pages/routes with descriptions\n- Explain health calculation formulas and constants\n- Add deployment instructions for Vercel\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)"
+    ]
+  }
+}
